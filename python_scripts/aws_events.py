@@ -23,25 +23,26 @@ def get_events(limit=100, offset=0, active=True):
     if response.status_code == 200:
         return response.json()
     else:
-        raise Exception(f"Error: {response.status_code}, {response.text}")
+        raise Exception("Error: {}, {}".format(response.status_code, response.text))
 
 def main():
-    try:
-        # Database connection parameters
-        conn = psycopg2.connect(
-            dbname=os.getenv("DB_NAME"),
-            user=os.getenv("DB_USER"),
-            password=os.getenv("DB_PASSWORD"),
-            host=os.getenv("DB_HOST"),
-            port=os.getenv("DB_PORT")
-        )
-        cur = conn.cursor()
-        
-        print("Connected to the database.")
+    while True:
+        conn = None
+        try:
+            # Database connection parameters
+            conn = psycopg2.connect(
+                dbname=os.getenv("DB_NAME"),
+                user=os.getenv("DB_USER"),
+                password=os.getenv("DB_PASSWORD"),
+                host=os.getenv("DB_HOST"),
+                port=os.getenv("DB_PORT")
+            )
+            cur = conn.cursor()
+            
+            print("---------------------------------")
+            print("Connected to the database.")
 
-        while True:
             start_time = time.time()
-            countEvent = 0
             limit = 100
             offset = 0
             all_events = []
@@ -56,16 +57,15 @@ def main():
             # Insert data into table
             insert_event_query = """
                 INSERT INTO events (
-                    count, title, event_id, featured, volume, volume24hr, liquidity, creation_date,
+                    title, event_id, featured, volume, volume24hr, liquidity, creation_date,
                     start_date, end_date, markets, timestamp
                 ) VALUES (
-                    %(Count)s, %(Title)s, %(ID)s, %(Featured)s, %(Volume)s, %(Volume24hr)s, %(Liquidity)s,
+                    %(Title)s, %(ID)s, %(Featured)s, %(Volume)s, %(Volume24hr)s, %(Liquidity)s,
                     %(CreationDate)s, %(StartDate)s, %(EndDate)s, %(Markets)s, %(Timestamp)s
                 )
             """
             
             for event in all_events:
-                countEvent += 1
                 event_markets = event.get('markets', [])
                 market_list = []
                 for market in event_markets:
@@ -96,7 +96,6 @@ def main():
                     market_list.append(market_data)
 
                 event_data = {
-                    "Count": countEvent,
                     "Title": event.get('title', ""),
                     "ID": event.get('id', ""),
                     "Featured": event.get('featured', False),
@@ -111,23 +110,23 @@ def main():
                 }
                 cur.execute(insert_event_query, event_data)
                 
-
             conn.commit()
             print("All data inserted successfully.")
             total_time = time.time() - start_time
-            print(f"Total elapsed time: {total_time:.2f} seconds")
+            print("Total elapsed time: {:.2f} seconds".format(total_time))
             
-            # Sleep for a specified duration before starting the next cycle
-            sleep_duration = 3600  # sleep for 1 hour
-            time.sleep(sleep_duration)
+        except Exception as e:
+            print("Error:", e)
+        finally:
+            if conn:
+                cur.close()
+                conn.close()
+                print("Database connection closed.")
+                print("---------------------------------")
 
-    except Exception as e:
-        print("Error:", e)
-    finally:
-        if conn:
-            cur.close()
-            conn.close()
-            print("Database connection closed.")
+        # Sleep for a specified duration before starting the next cycle
+        sleep_duration = 3600  # sleep for 1 hour
+        time.sleep(sleep_duration)
 
 if __name__ == "__main__":
     main()

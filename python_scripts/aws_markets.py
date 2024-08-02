@@ -23,23 +23,25 @@ def get_markets(limit=100, offset=0):
     if response.status_code == 200:
         return response.json()
     else:
-        raise Exception(f"Error: {response.status_code}, {response.text}")
+        raise Exception("Error: {}, {}".format(response.status_code, response.text))
 
 def main():
-    try:
-        # Database connection parameters
-        conn = psycopg2.connect(
-            dbname=os.getenv("DB_NAME"),
-            user=os.getenv("DB_USER"),
-            password=os.getenv("DB_PASSWORD"),
-            host=os.getenv("DB_HOST"),
-            port=os.getenv("DB_PORT")
-        )
-        cur = conn.cursor()
-        
-        print("Connected to the database.")
+    while True:
+        conn = None
+        try:
+            # Database connection parameters
+            conn = psycopg2.connect(
+                dbname=os.getenv("DB_NAME"),
+                user=os.getenv("DB_USER"),
+                password=os.getenv("DB_PASSWORD"),
+                host=os.getenv("DB_HOST"),
+                port=os.getenv("DB_PORT")
+            )
+            cur = conn.cursor()
+            
+            print("---------------------------------")
+            print("Connected to the database.")
 
-        while True:
             start_time = time.time()  
             count = 0
             limit = 100
@@ -100,19 +102,20 @@ def main():
             conn.commit()
             print("All data inserted successfully.")
             total_time = time.time() - start_time
-            print(f"Total elapsed time: {total_time:.2f} seconds")
+            print("Total elapsed time: {:.2f} seconds".format(total_time))
             
-            # Sleep for a specified duration before starting the next cycle
-            sleep_duration = 3600  # sleep for 1 hour
-            time.sleep(sleep_duration)
-            
-    except Exception as e:
-        print("Error:", e)
-    finally:
-        if conn:
-            cur.close()
-            conn.close()
-            print("Database connection closed.")
+        except Exception as e:
+            print("Error:", e)
+        finally:
+            if conn:
+                cur.close()
+                conn.close()
+                print("Database connection closed.")
+                print("---------------------------------")
+
+        # Sleep for a specified duration before starting the next cycle
+        sleep_duration = 3600  # sleep for 1 hour
+        time.sleep(sleep_duration)
 
 if __name__ == "__main__":
     main()
