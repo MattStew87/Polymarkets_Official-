@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import HomePage from './HomePage';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [markets, setMarkets] = useState([]);
@@ -25,53 +27,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Polymarkets Markets</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Count</th>
-            <th>Featured</th>
-            <th>Question</th>
-            <th>Slug</th>
-            <th>Condition ID</th>
-            <th>Market ID</th>
-            <th>Created At</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Liquidity</th>
-            <th>Volume</th>
-            <th>Volume 24hr</th>
-            <th>Rewards Min Size</th>
-            <th>Rewards Max Spread</th>
-            <th>Spread</th>
-            <th>Rewards Daily Rate</th>
-            <th>Timestamp</th>
-          </tr>
-        </thead>
-        <tbody>
-          {markets.map(market => (
-            <tr key={market.count}>
-              <td>{market.count}</td>
-              <td>{market.featured ? 'Yes' : 'No'}</td>
-              <td>{market.question}</td>
-              <td>{market.slug}</td>
-              <td>{market.condition_id}</td>
-              <td>{market.market_id}</td>
-              <td>{new Date(market.created_at).toLocaleString()}</td>
-              <td>{new Date(market.start_date).toLocaleString()}</td>
-              <td>{new Date(market.end_date).toLocaleString()}</td>
-              <td>{market.liquidity}</td>
-              <td>{market.volume}</td>
-              <td>{market.volume24hr}</td>
-              <td>{market.rewards_min_size}</td>
-              <td>{market.rewards_max_spread}</td>
-              <td>{market.spread}</td>
-              <td>{market.rewards_daily_rate}</td>
-              <td>{new Date(market.timestamp).toLocaleString()}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <HomePage />  
     </div>
   );
 }
