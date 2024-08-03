@@ -1,4 +1,5 @@
 import React from 'react';
+import { ChartComponent } from '@syncfusion/ej2-react-charts';
 
 const HomePage = () => {
   return (
@@ -872,6 +873,7 @@ const HomePage = () => {
                         <div className="card">
                         <div className="card-body pb-0">
                             {/* Empty card body */}
+                            <ChartComponent> </ChartComponent>
                         </div>
                         </div>
                     </div>
