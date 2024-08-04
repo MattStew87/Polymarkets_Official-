@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  ChartComponent, SeriesCollectionDirective, SeriesDirective, Inject,
-  Legend, Category, Tooltip, DataLabel, StackingLineSeries
+  ChartComponent,
+  SeriesCollectionDirective,
+  SeriesDirective,
+  Inject,
+  Legend,
+  Category,
+  Tooltip,
+  DataLabel,
+  StackingLineSeries,
+  Crosshair
 } from '@syncfusion/ej2-react-charts';
 
 function Chart1() {
@@ -27,44 +35,58 @@ function Chart1() {
     return <div>Error: {error}</div>;
   }
 
-  // Process data to group by question
   const groupedData = data.reduce((acc, item) => {
-    if (!acc[item.question]) {
-      acc[item.question] = [];
-    }
-    acc[item.question].push({
-      x: new Date(item.date).toLocaleDateString(),
-      y: parseFloat(item.liquidity)
-    });
+    if (!acc[item.question]) acc[item.question] = [];
+    acc[item.question].push({ x: new Date(item.date).toLocaleDateString(), y: parseFloat(item.liquidity) });
     return acc;
   }, {});
 
+  const marker = { visible: true, shape: 'Circle', width: 10, height: 10, border: { width: 1, color: '#F8AB1D' } };
+
   return (
-    <div className="chart1">
-      {Object.keys(groupedData).map((question, index) => (
-        <div key={index}>
-          <h3>{question}</h3>
-          <ChartComponent
-            id={`chart-${index}`}
-            primaryXAxis={{ valueType: 'Category' }}
-            primaryYAxis={{ title: 'Liquidity', labelFormat: '{value}' }}
-            title={question}
-          >
-            <Inject services={[StackingLineSeries, Legend, Tooltip, DataLabel, Category]} />
-            <SeriesCollectionDirective>
-              <SeriesDirective
-                dataSource={groupedData[question]}
-                xName='x'
-                yName='y'
-                name={question}
-                type='StackingLine'
-                marker={{ visible: true }}
-              />
-            </SeriesCollectionDirective>
-          </ChartComponent>
-        </div>
-      ))}
-    </div>
+    <ChartComponent
+      id="charts"
+      primaryXAxis={{
+        valueType: 'Category',
+        majorGridLines: { width: 1, dashArray: '4,4' },
+        majorTickLines: { width: 2, height: 8, color: 'black',},
+        lineStyle: { color: 'black', width: 2}
+      }}
+      primaryYAxis={{
+        title: 'Liquidity',
+        labelFormat: '${value}',
+        majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
+        majorTickLines: { width: 2, height: 8, color: 'black',},
+        minorTickLines: { width: 2, height: 5, color: 'black'},
+        lineStyle: { color: 'black', width: 2},
+        minimum: 0,
+        minorTicksPerInterval: 1
+      }}
+      tooltip={{ enable: true, shared: true }}
+      crosshair={{
+        enable: true,
+        lineType: 'Both',
+        line: {
+          color: 'black'
+        }
+      }}
+    >
+      <Inject services={[StackingLineSeries, Crosshair, Legend, Tooltip, DataLabel, Category]} />
+      <SeriesCollectionDirective>
+        {Object.keys(groupedData).map((question, index) => (
+          <SeriesDirective
+            key={index}
+            dataSource={groupedData[question]}
+            xName="x"
+            yName="y"
+            name={question}
+            width="2"
+            type="StackingLine"
+            marker={marker}
+          />
+        ))}
+      </SeriesCollectionDirective>
+    </ChartComponent>
   );
 }
 
