@@ -29,6 +29,28 @@ app.get('/api/markets', async (req, res) => {
   }
 });
 
+// New endpoint
+app.get('/api/liquidity', async (req, res) => {
+  const query = `
+    SELECT 
+    date_trunc('day', timestamp) as Date,
+    question, 
+    Avg(liquidity) as Liquidity
+    FROM public.markets
+    WHERE slug IN ('will-donald-trump-win-the-2024-us-presidential-election', 'will-kamala-harris-win-the-2024-us-presidential-election')
+    GROUP BY 1,2
+  `;
+
+  try {
+    const result = await pool.query(query);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import HomePage from './HomePage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -7,18 +8,17 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('http://3.141.7.141:5000/api/markets')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => setMarkets(data))
-      .catch(error => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://3.141.7.141:5000/api/markets');
+        setMarkets(response.data);
+      } catch (error) {
         console.error('Error fetching markets:', error);
         setError(error.message);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
   if (error) {
