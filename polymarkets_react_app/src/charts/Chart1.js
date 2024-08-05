@@ -6,7 +6,7 @@ import {
   SeriesDirective,
   Inject,
   Legend,
-  Category,
+  DateTime,
   Tooltip,
   DataLabel,
   StackingLineSeries,
@@ -16,12 +16,19 @@ import {
 function Chart1() {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
+  const [minDate, setMinDate] = useState(null);
+  const [maxDate, setMaxDate] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://3.141.7.141:5000/api/liquidity');
         setData(response.data);
+        
+        // Find min and max dates
+        const dates = response.data.map(item => new Date(item.date));
+        setMinDate(new Date(Math.min(...dates)));
+        setMaxDate(new Date(Math.max(...dates)));
       } catch (error) {
         console.error('Error fetching data:', error);
         setError(error.message);
@@ -37,7 +44,7 @@ function Chart1() {
 
   const groupedData = data.reduce((acc, item) => {
     if (!acc[item.question]) acc[item.question] = [];
-    acc[item.question].push({ x: new Date(item.date).toLocaleDateString(), y: parseFloat(item.liquidity) });
+    acc[item.question].push({ x: new Date(item.date), y: parseFloat(item.liquidity) });
     return acc;
   }, {});
 
@@ -47,15 +54,21 @@ function Chart1() {
     <ChartComponent
       id="charts"
       primaryXAxis={{
-        valueType: 'Category',
-        majorGridLines: { width: 1, dashArray: '4,4' },
+        valueType: 'DateTime',
+        minimum: minDate,
+        maximum: maxDate,
+        intervalType: 'Days',
+        majorGridLines: { width: 1, dashArray: '2,2', color: 'black'},
+        minorGridLines: { width: 0 },
         majorTickLines: { width: 2, height: 8, color: 'black',},
-        lineStyle: { color: 'black', width: 2}
+        lineStyle: { color: 'black', width: 2},
+        edgeLabelPlacement: 'Shift'
       }}
       primaryYAxis={{
         title: 'Liquidity',
         labelFormat: '${value}',
-        majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
+        majorGridLines: { width: 1, dashArray: '2,2', color: 'black'},
+        minorGridLines: { width: 0 },
         majorTickLines: { width: 2, height: 8, color: 'black',},
         minorTickLines: { width: 2, height: 5, color: 'black'},
         lineStyle: { color: 'black', width: 2},
@@ -70,8 +83,9 @@ function Chart1() {
           color: 'black'
         }
       }}
+      chartArea={{ border: { visible: false } }} 
     >
-      <Inject services={[StackingLineSeries, Crosshair, Legend, Tooltip, DataLabel, Category]} />
+      <Inject services={[StackingLineSeries, Crosshair, Legend, Tooltip, DataLabel, DateTime]} />
       <SeriesCollectionDirective>
         {Object.keys(groupedData).map((question, index) => (
           <SeriesDirective
