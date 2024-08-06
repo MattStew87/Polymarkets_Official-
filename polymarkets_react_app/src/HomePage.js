@@ -347,14 +347,14 @@ const HomePage = () => {
                 href="/pages/dashboard.html"
                 >
                 <img
-                    src="../../img/logos/logo-dark.svg"
+                    src="/pine_logo.png"
                     className="logo-dark h-rem-8 h-rem-md-10"
-                    alt="..."
+                    alt="Pine Logo"
                 />{" "}
                 <img
-                    src="../../img/logos/logo-light.svg"
+                    src="/pine_logo.png"
                     className="logo-light h-rem-8 h-rem-md-10"
-                    alt="..."
+                    alt="Pine Logo"
                 />
                 </a>
                 <div className="navbar-user d-lg-none">
@@ -752,7 +752,7 @@ const HomePage = () => {
                 <div className="mb-6 mb-xl-10">
                     <div className="row g-3 align-items-center">
                     <div className="col">
-                        <h1 className="ls-tight">Analytics</h1>
+                        <h1 className="ls-tight">Polymarkets Data</h1>
                     </div>
                     <div className="col">
                         <div className="hstack gap-2 justify-content-end">
@@ -780,92 +780,149 @@ const HomePage = () => {
                 <div className="vstack gap-3 gap-xl-6">
                     <div className="row row-cols-xl-4 g-3 g-xl-6">
                     <div className="col">
-                        <div className="card">
-                        <div className="p-4">
-                            <h6 className="text-limit text-muted mb-3">Orders</h6>
-                            <span className="text-sm text-muted text-opacity-90 fw-semibold">
-                            EUR
-                            </span>{" "}
-                            <span className="d-block h3 ls-tight fw-bold">
-                            25.040,00
-                            </span>
-                            <p className="mt-1">
-                            <span className="text-success text-xs">
-                                <i className="fas fa-arrow-up me-1" />
-                                20%{" "}
-                            </span>
-                            <span className="text-muted text-xs text-opacity-75">
-                                vs last week
-                            </span>
-                            </p>
-                        </div>
-                        </div>
-                    </div>
-                    <div className="col">
-                        <div className="card">
-                        <div className="p-4">
-                            <h6 className="text-limit text-muted mb-3">Orders</h6>
-                            <span className="text-sm text-muted text-opacity-90 fw-semibold">
-                            EUR
-                            </span>{" "}
-                            <span className="d-block h3 ls-tight fw-bold">
-                            25.040,00
-                            </span>
-                            <p className="mt-1">
-                            <span className="text-success text-xs">
-                                <i className="fas fa-arrow-up me-1" />
-                                20%{" "}
-                            </span>
-                            <span className="text-muted text-xs text-opacity-75">
-                                vs last week
-                            </span>
-                            </p>
-                        </div>
+                    {/* Started HERE */}
+                    <div className="card bg-success bg-opacity-10 border-success border-opacity-40">
+                        <div className="p-5">
+                            <div className="d-flex gap-3 mb-5">
+                            <img src="/pine_logo.png" className="avatar" alt="Pine Logo" />
+                            <div className="">
+                                <a
+                                className="d-inline-block text-sm text-heading fw-semibold"
+                                href="/pages/trade/details.html"
+                                >
+                                Active Markets
+                                </a>
+                                <span className="d-block text-xs text-muted">Bitcoin</span>
+                            </div>
+                            </div>
+                            <div className="d-flex align-items-end">
+                            <div className="hstack gap-2">
+                                <span className="badge bg-success bg-opacity-25 text-success">
+                                +2.4%
+                                </span>
+                                <span className="badge badge-count bg-success text-xs rounded-circle">
+                                <i className="bi bi-arrow-up-right" />
+                                </span>
+                            </div>
+                            <div className="w-rem-32 ms-auto">
+                                <div style={{ minHeight: 36 }}>
+                                {/* Removed the mini chart */}
+                                </div>
+                            </div>
+                            </div>
+                            <div className="text-lg fw-bold text-heading mt-2">$23,000.00</div>
                         </div>
                     </div>
-                    <div className="col">
-                        <div className="card">
-                        <div className="p-4">
-                            <h6 className="text-limit text-muted mb-3">Orders</h6>
-                            <span className="text-sm text-muted text-opacity-90 fw-semibold">
-                            EUR
-                            </span>{" "}
-                            <span className="d-block h3 ls-tight fw-bold">
-                            25.040,00
-                            </span>
-                            <p className="mt-1">
-                            <span className="text-success text-xs">
-                                <i className="fas fa-arrow-up me-1" />
-                                20%{" "}
-                            </span>
-                            <span className="text-muted text-xs text-opacity-75">
-                                vs last week
-                            </span>
-                            </p>
-                        </div>
-                        </div>
+
+                    {/* ENDS HERE */}
                     </div>
                     <div className="col">
-                        <div className="card">
-                        <div className="p-4">
-                            <h6 className="text-limit text-muted mb-3">Orders</h6>
-                            <span className="text-sm text-muted text-opacity-90 fw-semibold">
-                            EUR
-                            </span>{" "}
-                            <span className="d-block h3 ls-tight fw-bold">
-                            25.040,00
-                            </span>
-                            <p className="mt-1">
-                            <span className="text-success text-xs">
-                                <i className="fas fa-arrow-up me-1" />
-                                20%{" "}
-                            </span>
-                            <span className="text-muted text-xs text-opacity-75">
-                                vs last week
-                            </span>
-                            </p>
+                        {/* Started HERE */}
+                        <div className="card bg-success bg-opacity-10 border-success border-opacity-40">
+                            <div className="p-5">
+                                <div className="d-flex gap-3 mb-5">
+                                <img src="/pine_logo.png" className="avatar" alt="Pine Logo" />
+                                <div className="">
+                                    <a
+                                    className="d-inline-block text-sm text-heading fw-semibold"
+                                    href="/pages/trade/details.html"
+                                    >
+                                    Total Volume
+                                    </a>
+                                    <span className="d-block text-xs text-muted">Bitcoin</span>
+                                </div>
+                                </div>
+                                <div className="d-flex align-items-end">
+                                <div className="hstack gap-2">
+                                    <span className="badge bg-success bg-opacity-25 text-success">
+                                    +2.4%
+                                    </span>
+                                    <span className="badge badge-count bg-success text-xs rounded-circle">
+                                    <i className="bi bi-arrow-up-right" />
+                                    </span>
+                                </div>
+                                <div className="w-rem-32 ms-auto">
+                                    <div style={{ minHeight: 36 }}>
+                                    {/* Removed the mini chart */}
+                                    </div>
+                                </div>
+                                </div>
+                                <div className="text-lg fw-bold text-heading mt-2">$23,000.00</div>
+                            </div>
                         </div>
+                        {/* ENDS HERE */}
+                    </div>
+                    <div className="col">
+                        {/* Started HERE */}
+                        <div className="card bg-success bg-opacity-10 border-success border-opacity-40">
+                            <div className="p-5">
+                                <div className="d-flex gap-3 mb-5">
+                                <img src="/pine_logo.png" className="avatar" alt="Pine Logo" />
+                                <div className="">
+                                    <a
+                                    className="d-inline-block text-sm text-heading fw-semibold"
+                                    href="/pages/trade/details.html"
+                                    >
+                                    24 Hour Volume
+                                    </a>
+                                    <span className="d-block text-xs text-muted">Bitcoin</span>
+                                </div>
+                                </div>
+                                <div className="d-flex align-items-end">
+                                <div className="hstack gap-2">
+                                    <span className="badge bg-success bg-opacity-25 text-success">
+                                    +2.4%
+                                    </span>
+                                    <span className="badge badge-count bg-success text-xs rounded-circle">
+                                    <i className="bi bi-arrow-up-right" />
+                                    </span>
+                                </div>
+                                <div className="w-rem-32 ms-auto">
+                                    <div style={{ minHeight: 36 }}>
+                                    {/* Removed the mini chart */}
+                                    </div>
+                                </div>
+                                </div>
+                                <div className="text-lg fw-bold text-heading mt-2">$23,000.00</div>
+                            </div>
                         </div>
+                        {/* ENDS HERE */}
+                    </div>
+                    <div className="col">
+                        {/* Started HERE */}
+                        <div className="card bg-success bg-opacity-10 border-success border-opacity-40">
+                            <div className="p-5">
+                                <div className="d-flex gap-3 mb-5">
+                                <img src="/pine_logo.png" className="avatar" alt="Pine Logo" />
+                                <div className="">
+                                    <a
+                                    className="d-inline-block text-sm text-heading fw-semibold"
+                                    href="/pages/trade/details.html"
+                                    >
+                                    Liquidity
+                                    </a>
+                                    <span className="d-block text-xs text-muted">Bitcoin</span>
+                                </div>
+                                </div>
+                                <div className="d-flex align-items-end">
+                                <div className="hstack gap-2">
+                                    <span className="badge bg-success bg-opacity-25 text-success">
+                                    +2.4%
+                                    </span>
+                                    <span className="badge badge-count bg-success text-xs rounded-circle">
+                                    <i className="bi bi-arrow-up-right" />
+                                    </span>
+                                </div>
+                                <div className="w-rem-32 ms-auto">
+                                    <div style={{ minHeight: 36 }}>
+                                    {/* Removed the mini chart */}
+                                    </div>
+                                </div>
+                                </div>
+                                <div className="text-lg fw-bold text-heading mt-2">$23,000.00</div>
+                            </div>
+                        </div>
+                        {/* ENDS HERE */}
                     </div>
                     </div>
                     <div className="row g-3 g-xl-6">
