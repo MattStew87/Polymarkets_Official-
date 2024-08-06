@@ -13,7 +13,7 @@ import {
   Crosshair
 } from '@syncfusion/ej2-react-charts';
 
-function Chart1() {
+function Chart1({ id }) {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [minDate, setMinDate] = useState(null);
@@ -52,7 +52,7 @@ function Chart1() {
 
   return (
     <ChartComponent
-      id="charts"
+      id={id}
       primaryXAxis={{
         valueType: 'DateTime',
         minimum: minDate,
