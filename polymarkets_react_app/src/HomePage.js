@@ -1,5 +1,6 @@
 import React from 'react';
 import Chart1 from './charts/Chart1'; 
+import TotalDataComponent from './charts/TotalDataComponent';
 
 const HomePage = () => {
   return (
@@ -778,153 +779,11 @@ const HomePage = () => {
                     </div>
                 </div>
                 <div className="vstack gap-3 gap-xl-6">
-                    <div className="row row-cols-xl-4 g-3 g-xl-6">
-                    <div className="col">
-                    {/* Started HERE */}
-                    <div className="card bg-success bg-opacity-10 border-success border-opacity-40">
-                        <div className="p-5">
-                            <div className="d-flex gap-3 mb-5">
-                            <img src="/pine_logo.png" className="avatar" alt="Pine Logo" />
-                            <div className="">
-                                <a
-                                className="d-inline-block text-sm text-heading fw-semibold"
-                                href="/pages/trade/details.html"
-                                >
-                                Active Markets
-                                </a>
-                                <span className="d-block text-xs text-muted">Bitcoin</span>
-                            </div>
-                            </div>
-                            <div className="d-flex align-items-end">
-                            <div className="hstack gap-2">
-                                <span className="badge bg-success bg-opacity-25 text-success">
-                                +2.4%
-                                </span>
-                                <span className="badge badge-count bg-success text-xs rounded-circle">
-                                <i className="bi bi-arrow-up-right" />
-                                </span>
-                            </div>
-                            <div className="w-rem-32 ms-auto">
-                                <div style={{ minHeight: 36 }}>
-                                {/* Removed the mini chart */}
-                                </div>
-                            </div>
-                            </div>
-                            <div className="text-lg fw-bold text-heading mt-2">$23,000.00</div>
-                        </div>
-                    </div>
+                        {/* OVERALL DATA */}
+                        <TotalDataComponent />
+                    
 
-                    {/* ENDS HERE */}
-                    </div>
-                    <div className="col">
-                        {/* Started HERE */}
-                        <div className="card bg-success bg-opacity-10 border-success border-opacity-40">
-                            <div className="p-5">
-                                <div className="d-flex gap-3 mb-5">
-                                <img src="/pine_logo.png" className="avatar" alt="Pine Logo" />
-                                <div className="">
-                                    <a
-                                    className="d-inline-block text-sm text-heading fw-semibold"
-                                    href="/pages/trade/details.html"
-                                    >
-                                    Total Volume
-                                    </a>
-                                    <span className="d-block text-xs text-muted">Bitcoin</span>
-                                </div>
-                                </div>
-                                <div className="d-flex align-items-end">
-                                <div className="hstack gap-2">
-                                    <span className="badge bg-success bg-opacity-25 text-success">
-                                    +2.4%
-                                    </span>
-                                    <span className="badge badge-count bg-success text-xs rounded-circle">
-                                    <i className="bi bi-arrow-up-right" />
-                                    </span>
-                                </div>
-                                <div className="w-rem-32 ms-auto">
-                                    <div style={{ minHeight: 36 }}>
-                                    {/* Removed the mini chart */}
-                                    </div>
-                                </div>
-                                </div>
-                                <div className="text-lg fw-bold text-heading mt-2">$23,000.00</div>
-                            </div>
-                        </div>
-                        {/* ENDS HERE */}
-                    </div>
-                    <div className="col">
-                        {/* Started HERE */}
-                        <div className="card bg-success bg-opacity-10 border-success border-opacity-40">
-                            <div className="p-5">
-                                <div className="d-flex gap-3 mb-5">
-                                <img src="/pine_logo.png" className="avatar" alt="Pine Logo" />
-                                <div className="">
-                                    <a
-                                    className="d-inline-block text-sm text-heading fw-semibold"
-                                    href="/pages/trade/details.html"
-                                    >
-                                    24 Hour Volume
-                                    </a>
-                                    <span className="d-block text-xs text-muted">Bitcoin</span>
-                                </div>
-                                </div>
-                                <div className="d-flex align-items-end">
-                                <div className="hstack gap-2">
-                                    <span className="badge bg-success bg-opacity-25 text-success">
-                                    +2.4%
-                                    </span>
-                                    <span className="badge badge-count bg-success text-xs rounded-circle">
-                                    <i className="bi bi-arrow-up-right" />
-                                    </span>
-                                </div>
-                                <div className="w-rem-32 ms-auto">
-                                    <div style={{ minHeight: 36 }}>
-                                    {/* Removed the mini chart */}
-                                    </div>
-                                </div>
-                                </div>
-                                <div className="text-lg fw-bold text-heading mt-2">$23,000.00</div>
-                            </div>
-                        </div>
-                        {/* ENDS HERE */}
-                    </div>
-                    <div className="col">
-                        {/* Started HERE */}
-                        <div className="card bg-success bg-opacity-10 border-success border-opacity-40">
-                            <div className="p-5">
-                                <div className="d-flex gap-3 mb-5">
-                                <img src="/pine_logo.png" className="avatar" alt="Pine Logo" />
-                                <div className="">
-                                    <a
-                                    className="d-inline-block text-sm text-heading fw-semibold"
-                                    href="/pages/trade/details.html"
-                                    >
-                                    Liquidity
-                                    </a>
-                                    <span className="d-block text-xs text-muted">Bitcoin</span>
-                                </div>
-                                </div>
-                                <div className="d-flex align-items-end">
-                                <div className="hstack gap-2">
-                                    <span className="badge bg-success bg-opacity-25 text-success">
-                                    +2.4%
-                                    </span>
-                                    <span className="badge badge-count bg-success text-xs rounded-circle">
-                                    <i className="bi bi-arrow-up-right" />
-                                    </span>
-                                </div>
-                                <div className="w-rem-32 ms-auto">
-                                    <div style={{ minHeight: 36 }}>
-                                    {/* Removed the mini chart */}
-                                    </div>
-                                </div>
-                                </div>
-                                <div className="text-lg fw-bold text-heading mt-2">$23,000.00</div>
-                            </div>
-                        </div>
-                        {/* ENDS HERE */}
-                    </div>
-                    </div>
+                    
                     <div className="row g-3 g-xl-6">
                     <div className="col-xxl-12">
                         <div className="card">
