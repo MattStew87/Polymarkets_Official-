@@ -48,7 +48,7 @@ function Chart1() {
     return acc;
   }, {});
 
-  const marker = { visible: true, shape: 'Circle', width: 10, height: 10, border: { width: 1, color: '#F8AB1D' } };
+  const marker = { visible: true, shape: 'Circle', width: 10, height: 10, border: { width: 1} };
 
   return (
     <ChartComponent
