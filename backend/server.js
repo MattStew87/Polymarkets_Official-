@@ -113,7 +113,7 @@ app.get('/api/totaldata', async (req, res) => {
           CASE WHEN yesterday_avg_liquidity = 0 THEN NULL ELSE ((today_avg_liquidity - yesterday_avg_liquidity) / yesterday_avg_liquidity) * 100 END AS pct_change_liquidity,
 
           today_total_markets,
-          CASE WHEN yesterday_total_markets = 0 THEN NULL ELSE ((today_total_markets - yesterday_total_markets) / yesterday_total_markets) * 100 END AS pct_change_markets
+          CASE WHEN yesterday_total_markets = 0 THEN NULL ELSE ((today_total_markets - yesterday_total_markets) / yesterday_total_markets::numeric) * 100 END AS pct_change_markets
       FROM
           Today, Yesterday;  `;
 

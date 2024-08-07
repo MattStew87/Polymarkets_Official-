@@ -779,11 +779,11 @@ const HomePage = () => {
                     </div>
                 </div>
                 <div className="vstack gap-3 gap-xl-6">
+                    
                         {/* OVERALL DATA */}
                         <TotalDataComponent />
-                    
+                        {/* OVERALL DATA */}
 
-                    
                     <div className="row g-3 g-xl-6">
                     <div className="col-xxl-12">
                         <div className="card">

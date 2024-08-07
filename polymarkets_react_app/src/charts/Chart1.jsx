@@ -50,6 +50,30 @@ function Chart1({ id }) {
 
   const marker = { visible: true, shape: 'Circle', width: 10, height: 10, border: { width: 1} };
 
+  const formatValue = (value) => {
+    if (Math.abs(value) >= 1000000000) {
+      return '$' + (value / 1000000000).toFixed(1) + 'B';
+    } else if (Math.abs(value) >= 1000000) {
+      return '$' + (value / 1000000).toFixed(1) + 'M';
+    } else if (Math.abs(value) >= 1000) {
+      return '$' + (value / 1000).toFixed(1) + 'K';
+    }
+    return '$' + value.toFixed(2);
+  };
+
+  const axisLabelRender = (args) => {
+    if (args.axis.name === 'primaryYAxis') {
+      args.text = formatValue(Number(args.text.replace('$', '')));
+    }
+  };
+
+  const tooltipRender = (args) => {
+    if (args.series.type === 'StackingLine') {
+      let value = formatValue(args.point.y);
+      args.text = `${args.series.name}: ${value}`;
+    }
+  };
+
   return (
     <ChartComponent
       id={id}
@@ -58,7 +82,7 @@ function Chart1({ id }) {
         minimum: minDate,
         maximum: maxDate,
         intervalType: 'Days',
-        majorGridLines: { width: 1, dashArray: '2,2', color: 'black'},
+        majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
         minorGridLines: { width: 0 },
         majorTickLines: { width: 2, height: 8, color: 'black',},
         lineStyle: { color: 'black', width: 2},
@@ -67,7 +91,7 @@ function Chart1({ id }) {
       primaryYAxis={{
         title: 'Liquidity',
         labelFormat: '${value}',
-        majorGridLines: { width: 1, dashArray: '2,2', color: 'black'},
+        majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
         minorGridLines: { width: 0 },
         majorTickLines: { width: 2, height: 8, color: 'black',},
         minorTickLines: { width: 2, height: 5, color: 'black'},
@@ -75,7 +99,14 @@ function Chart1({ id }) {
         minimum: 0,
         minorTicksPerInterval: 1
       }}
-      tooltip={{ enable: true, shared: true }}
+      tooltip={{
+        enable: true,
+        shared: true,
+        format: '${series.name}: ${point.y}',
+        fill: '#7bb4eb',
+        border: { width: 2, color: 'grey' },
+        textStyle: { color: '#ffffff' }
+      }}
       crosshair={{
         enable: true,
         lineType: 'Both',
@@ -83,7 +114,9 @@ function Chart1({ id }) {
           color: 'black'
         }
       }}
-      chartArea={{ border: { visible: false } }} 
+      chartArea={{ border: { visible: false } }}
+      axisLabelRender={axisLabelRender}
+      tooltipRender={tooltipRender}
     >
       <Inject services={[StackingLineSeries, Crosshair, Legend, Tooltip, DataLabel, DateTime]} />
       <SeriesCollectionDirective>
