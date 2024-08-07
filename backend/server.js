@@ -115,9 +115,7 @@ app.get('/api/totaldata', async (req, res) => {
           today_total_markets,
           CASE WHEN yesterday_total_markets = 0 THEN NULL ELSE ((today_total_markets - yesterday_total_markets) / yesterday_total_markets) * 100 END AS pct_change_markets
       FROM
-          Today, Yesterday;
-
-  `;
+          Today, Yesterday;  `;
 
   try {
     const result = await pool.query(query);
