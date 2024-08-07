@@ -8,6 +8,8 @@ const TotalDataComponent = () => {
   const [pctChangeVolume, setPctChangeVolume] = useState(null);
   const [todayLiquidity, setTodayLiquidity] = useState(null);
   const [pctChangeLiquidity, setPctChangeLiquidity] = useState(null);
+  const [todayMarkets, setTodayMarkets] = useState(null);
+  const [pctChangeMarkets, setPctChangeMarkets] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -22,6 +24,8 @@ const TotalDataComponent = () => {
           setPctChangeVolume(parseFloat(totalData.pct_change_volume));
           setTodayLiquidity(parseFloat(totalData.today_avg_liquidity));
           setPctChangeLiquidity(parseFloat(totalData.pct_change_liquidity));
+          setTodayMarkets(parseFloat(totalData.today_total_markets)); 
+          setPctChangeMarkets(parseFloat(totalData.pct_change_markets))
         }
       } catch (err) {
         console.error('Error fetching data:', err);
@@ -36,12 +40,27 @@ const TotalDataComponent = () => {
     return <div>{error}</div>;
   }
 
-  
+  const getCardClasses = (change) => {
+    return change >= 0 ? 'card bg-success bg-opacity-10 border-success border-opacity-40' : 'card bg-danger bg-opacity-10 border-danger border-opacity-40';
+  };
+
+  const getBadgeClasses = (change) => {
+    return change >= 0 ? 'badge bg-success bg-opacity-25 text-success' : 'badge bg-danger bg-opacity-25 text-danger';
+  };
+
+  const getArrowIcon = (change) => {
+    return change >= 0 ? 'bi bi-arrow-up-right' : 'bi bi-arrow-down-left';
+  };
+
+  const getArrowBadgeClasses = (change) => {
+    return change >= 0 ? 'badge badge-count bg-success text-xs rounded-circle' : 'badge badge-count bg-danger text-xs rounded-circle';
+  };
+
   return (
     <div className="row row-cols-xl-4 g-3 g-xl-6">
       {/* Active Markets Card */}
       <div className="col">
-        <div className="card bg-success bg-opacity-10 border-success border-opacity-40">
+        <div className={getCardClasses(pctChangeMarkets)}>
           <div className="p-5">
             <div className="d-flex gap-3 mb-5">
               <img src="/pine_logo.png" className="avatar" alt="Pine Logo" />
@@ -54,11 +73,11 @@ const TotalDataComponent = () => {
             </div>
             <div className="d-flex align-items-end">
               <div className="hstack gap-2">
-                <span className="badge bg-success bg-opacity-25 text-success">
-                  +2.4%
+                <span className={getBadgeClasses(pctChangeMarkets)}>
+                  {pctChangeMarkets !== null ? pctChangeMarkets.toFixed(2) : '0'}%
                 </span>
-                <span className="badge badge-count bg-success text-xs rounded-circle">
-                  <i className="bi bi-arrow-up-right" />
+                <span className={getArrowBadgeClasses(pctChangeMarkets)}>
+                  <i className={getArrowIcon(pctChangeMarkets)} />
                 </span>
               </div>
               <div className="w-rem-32 ms-auto">
@@ -68,7 +87,7 @@ const TotalDataComponent = () => {
               </div>
             </div>
             <div className="text-lg fw-bold text-heading mt-2">
-              {todayVolume24hr !== null ? `$${todayVolume24hr.toLocaleString()}` : 'Loading...'}
+              {todayMarkets !== null ? `${todayMarkets.toLocaleString()}` : 'Loading...'}
             </div>
           </div>
         </div>
@@ -76,7 +95,7 @@ const TotalDataComponent = () => {
 
       {/* Total Volume Card */}
       <div className="col">
-        <div className="card bg-success bg-opacity-10 border-success border-opacity-40">
+        <div className={getCardClasses(pctChangeVolume)}>
           <div className="p-5">
             <div className="d-flex gap-3 mb-5">
               <img src="/pine_logo.png" className="avatar" alt="Pine Logo" />
@@ -89,11 +108,11 @@ const TotalDataComponent = () => {
             </div>
             <div className="d-flex align-items-end">
               <div className="hstack gap-2">
-                <span className="badge bg-success bg-opacity-25 text-success">
-                  +{pctChangeVolume !== null ? pctChangeVolume.toFixed(2) : '0'}%
+                <span className={getBadgeClasses(pctChangeVolume)}>
+                  {pctChangeVolume !== null ? pctChangeVolume.toFixed(2) : '0'}%
                 </span>
-                <span className="badge badge-count bg-success text-xs rounded-circle">
-                  <i className="bi bi-arrow-up-right" />
+                <span className={getArrowBadgeClasses(pctChangeVolume)}>
+                  <i className={getArrowIcon(pctChangeVolume)} />
                 </span>
               </div>
               <div className="w-rem-32 ms-auto">
@@ -111,7 +130,7 @@ const TotalDataComponent = () => {
 
       {/* 24 Hour Volume Card */}
       <div className="col">
-        <div className="card bg-success bg-opacity-10 border-success border-opacity-40">
+        <div className={getCardClasses(pctChangeVolume24hr)}>
           <div className="p-5">
             <div className="d-flex gap-3 mb-5">
               <img src="/pine_logo.png" className="avatar" alt="Pine Logo" />
@@ -124,11 +143,11 @@ const TotalDataComponent = () => {
             </div>
             <div className="d-flex align-items-end">
               <div className="hstack gap-2">
-                <span className="badge bg-success bg-opacity-25 text-success">
-                  +{pctChangeVolume24hr !== null ? pctChangeVolume24hr.toFixed(2) : '0'}%
+                <span className={getBadgeClasses(pctChangeVolume24hr)}>
+                  {pctChangeVolume24hr !== null ? pctChangeVolume24hr.toFixed(2) : '0'}%
                 </span>
-                <span className="badge badge-count bg-success text-xs rounded-circle">
-                  <i className="bi bi-arrow-up-right" />
+                <span className={getArrowBadgeClasses(pctChangeVolume24hr)}>
+                  <i className={getArrowIcon(pctChangeVolume24hr)} />
                 </span>
               </div>
               <div className="w-rem-32 ms-auto">
@@ -146,7 +165,7 @@ const TotalDataComponent = () => {
 
       {/* Liquidity Card */}
       <div className="col">
-        <div className="card bg-success bg-opacity-10 border-success border-opacity-40">
+        <div className={getCardClasses(pctChangeLiquidity)}>
           <div className="p-5">
             <div className="d-flex gap-3 mb-5">
               <img src="/pine_logo.png" className="avatar" alt="Pine Logo" />
@@ -159,11 +178,11 @@ const TotalDataComponent = () => {
             </div>
             <div className="d-flex align-items-end">
               <div className="hstack gap-2">
-                <span className="badge bg-success bg-opacity-25 text-success">
-                  +{pctChangeLiquidity !== null ? pctChangeLiquidity.toFixed(2) : '0'}%
+                <span className={getBadgeClasses(pctChangeLiquidity)}>
+                  {pctChangeLiquidity !== null ? pctChangeLiquidity.toFixed(2) : '0'}%
                 </span>
-                <span className="badge badge-count bg-success text-xs rounded-circle">
-                  <i className="bi bi-arrow-up-right" />
+                <span className={getArrowBadgeClasses(pctChangeLiquidity)}>
+                  <i className={getArrowIcon(pctChangeLiquidity)} />
                 </span>
               </div>
               <div className="w-rem-32 ms-auto">

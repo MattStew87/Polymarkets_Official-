@@ -53,63 +53,70 @@ app.get('/api/liquidity', async (req, res) => {
 // New endpoint for total data
 app.get('/api/totaldata', async (req, res) => {
   const query = `
-    WITH MarketAverages AS (
+          WITH MarketAverages AS (
+          SELECT
+              Date_trunc('day', timestamp) AS Date,
+              question,
+              AVG(volume24hr) AS avg_volume24hr,
+              AVG(volume) AS avg_volume,
+              AVG(liquidity) AS avg_liquidity
+          FROM
+              public.markets
+          WHERE
+              Date_trunc('day', timestamp) IN (Date_trunc('day', NOW()), Date_trunc('day', NOW() - INTERVAL '1 day'))
+          GROUP BY
+              Date_trunc('day', timestamp),
+              question
+      ),
+      SummedAverages AS (
+          SELECT
+              Date,
+              SUM(avg_volume24hr) AS total_avg_volume24hr,
+              SUM(avg_volume) AS total_avg_volume,
+              SUM(avg_liquidity) AS total_avg_liquidity,
+              COUNT(DISTINCT question) AS total_markets
+          FROM
+              MarketAverages
+          GROUP BY
+              Date
+      ),
+      Today AS (
+          SELECT
+              total_avg_volume24hr AS today_avg_volume24hr,
+              total_avg_volume AS today_avg_volume,
+              total_avg_liquidity AS today_avg_liquidity,
+              total_markets AS today_total_markets
+          FROM
+              SummedAverages
+          WHERE
+              Date = Date_trunc('day', NOW())
+      ),
+      Yesterday AS (
+          SELECT
+              total_avg_volume24hr AS yesterday_avg_volume24hr,
+              total_avg_volume AS yesterday_avg_volume,
+              total_avg_liquidity AS yesterday_avg_liquidity,
+              total_markets AS yesterday_total_markets
+          FROM
+              SummedAverages
+          WHERE
+              Date = Date_trunc('day', NOW() - INTERVAL '1 day')
+      )
       SELECT
-          Date_trunc('day', timestamp) AS Date,
-          question,
-          AVG(volume24hr) AS avg_volume24hr,
-          AVG(volume) AS avg_volume,
-          AVG(liquidity) AS avg_liquidity
-      FROM
-          public.markets
-      WHERE
-          Date_trunc('day', timestamp) IN (Date_trunc('day', NOW()), Date_trunc('day', NOW() - INTERVAL '1 day'))
-      GROUP BY
-          Date_trunc('day', timestamp),
-          question
-    ),
-    SummedAverages AS (
-      SELECT
-          Date,
-          SUM(avg_volume24hr) AS total_avg_volume24hr,
-          SUM(avg_volume) AS total_avg_volume,
-          SUM(avg_liquidity) AS total_avg_liquidity
-      FROM
-          MarketAverages
-      GROUP BY
-          Date
-    ),
-    Today AS (
-      SELECT
-          total_avg_volume24hr AS today_avg_volume24hr,
-          total_avg_volume AS today_avg_volume,
-          total_avg_liquidity AS today_avg_liquidity
-      FROM
-          SummedAverages
-      WHERE
-          Date = Date_trunc('day', NOW())
-    ),
-    Yesterday AS (
-      SELECT
-          total_avg_volume24hr AS yesterday_avg_volume24hr,
-          total_avg_volume AS yesterday_avg_volume,
-          total_avg_liquidity AS yesterday_avg_liquidity
-      FROM
-          SummedAverages
-      WHERE
-          Date = Date_trunc('day', NOW() - INTERVAL '1 day')
-    )
-    SELECT
-      today_avg_volume24hr,
-      CASE WHEN yesterday_avg_volume24hr = 0 THEN NULL ELSE ((today_avg_volume24hr - yesterday_avg_volume24hr) / yesterday_avg_volume24hr) * 100 END AS pct_change_volume24hr,
-      
-      today_avg_volume,
-      CASE WHEN yesterday_avg_volume = 0 THEN NULL ELSE ((today_avg_volume - yesterday_avg_volume) / yesterday_avg_volume) * 100 END AS pct_change_volume,
+          today_avg_volume24hr,
+          CASE WHEN yesterday_avg_volume24hr = 0 THEN NULL ELSE ((today_avg_volume24hr - yesterday_avg_volume24hr) / yesterday_avg_volume24hr) * 100 END AS pct_change_volume24hr,
+          
+          today_avg_volume,
+          CASE WHEN yesterday_avg_volume = 0 THEN NULL ELSE ((today_avg_volume - yesterday_avg_volume) / yesterday_avg_volume) * 100 END AS pct_change_volume,
 
-      today_avg_liquidity,
-      CASE WHEN yesterday_avg_liquidity = 0 THEN NULL ELSE ((today_avg_liquidity - yesterday_avg_liquidity) / yesterday_avg_liquidity) * 100 END AS pct_change_liquidity
-    FROM
-      Today, Yesterday;
+          today_avg_liquidity,
+          CASE WHEN yesterday_avg_liquidity = 0 THEN NULL ELSE ((today_avg_liquidity - yesterday_avg_liquidity) / yesterday_avg_liquidity) * 100 END AS pct_change_liquidity,
+
+          today_total_markets,
+          CASE WHEN yesterday_total_markets = 0 THEN NULL ELSE ((today_total_markets - yesterday_total_markets) / yesterday_total_markets) * 100 END AS pct_change_markets
+      FROM
+          Today, Yesterday;
+
   `;
 
   try {
