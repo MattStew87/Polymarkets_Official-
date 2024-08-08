@@ -68,11 +68,13 @@ function Chart1({ id }) {
   };
 
   const tooltipRender = (args) => {
-    if (args.series.type === 'StackingLine') {
-      let value = formatValue(args.point.y);
-      args.text = `${args.series.name}: ${value}`;
+    console.log('TooltipRender called', args);
+    if (args.series && args.point) {
+      const formattedValue = formatValue(args.point.y);
+      args.text = `${args.series.name}: ${formattedValue}`;
     }
   };
+  
 
   return (
     <ChartComponent
@@ -100,12 +102,8 @@ function Chart1({ id }) {
         minorTicksPerInterval: 1
       }}
       tooltip={{
-        enable: true,
-        shared: true,
-        format: '${series.name}: ${point.y}',
-        fill: '#7bb4eb',
-        border: { width: 2, color: 'grey' },
-        textStyle: { color: '#ffffff' }
+        enable: true, 
+        format: '${series.name}: ${point.y}'
       }}
       crosshair={{
         enable: true,

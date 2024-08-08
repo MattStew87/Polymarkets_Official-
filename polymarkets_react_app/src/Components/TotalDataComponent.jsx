@@ -68,7 +68,7 @@ const TotalDataComponent = () => {
                 <a className="d-inline-block text-sm text-heading fw-semibold" href="/pages/trade/details.html">
                   Active Markets
                 </a>
-                <span className="d-block text-xs text-muted">Bitcoin</span>
+                <span className="d-block text-xs text-muted">Pine</span>
               </div>
             </div>
             <div className="d-flex align-items-end">
@@ -103,7 +103,7 @@ const TotalDataComponent = () => {
                 <a className="d-inline-block text-sm text-heading fw-semibold" href="/pages/trade/details.html">
                   Total Volume
                 </a>
-                <span className="d-block text-xs text-muted">Bitcoin</span>
+                <span className="d-block text-xs text-muted">Pine</span>
               </div>
             </div>
             <div className="d-flex align-items-end">
@@ -138,7 +138,7 @@ const TotalDataComponent = () => {
                 <a className="d-inline-block text-sm text-heading fw-semibold" href="/pages/trade/details.html">
                   24 Hour Volume
                 </a>
-                <span className="d-block text-xs text-muted">Bitcoin</span>
+                <span className="d-block text-xs text-muted">Pine</span>
               </div>
             </div>
             <div className="d-flex align-items-end">
@@ -173,7 +173,7 @@ const TotalDataComponent = () => {
                 <a className="d-inline-block text-sm text-heading fw-semibold" href="/pages/trade/details.html">
                   Liquidity
                 </a>
-                <span className="d-block text-xs text-muted">Bitcoin</span>
+                <span className="d-block text-xs text-muted">Pine</span>
               </div>
             </div>
             <div className="d-flex align-items-end">

@@ -1,6 +1,6 @@
 import React from 'react';
-import Chart1 from './charts/Chart1'; 
-import TotalDataComponent from './charts/TotalDataComponent';
+import Chart1 from './Components/Chart1'; 
+import TotalDataComponent from './Components/TotalDataComponent';
 
 const HomePage = () => {
   return (
