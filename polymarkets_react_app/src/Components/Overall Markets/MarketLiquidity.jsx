@@ -63,7 +63,8 @@ function MarketLiquidity({ id }) {
   const tooltipRender = (args) => {
     if (args.series && args.point) {
       const formattedValue = formatValue(args.point.y);
-      args.text = `${args.series.name}: ${formattedValue}`;
+      const question = chartData[args.point.index].question;
+      args.text = `${question}: ${formattedValue}`;
     }
   };
 
