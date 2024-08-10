@@ -50,7 +50,7 @@ app.get('/api/liquidity', async (req, res) => {
   }
 });
 
-// New endpoint for total data
+// New endpoint for Overall Data 
 app.get('/api/overallData', async (req, res) => {
   const query = `
           WITH MarketAverages AS (
@@ -130,6 +130,40 @@ app.get('/api/overallData', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
+
+// New endpoint for Overall data by Market
+app.get('/api/overallMarketData', async (req, res) => {
+    const query = `
+            With tab1 as (
+            Select
+            Question, 
+            avg(liquidity) as Liquidity, 
+            avg(volume) as Volume, 
+            avg(volume24hr) as Volume24hr,
+            avg(spread) as Spread 
+            from public.markets 
+            where timestamp > current_date 
+            group by 1 
+            )  
+
+            Select
+            * 
+            from tab1 
+            order by Volume Desc 
+            limit 100    
+    `;
+  
+    try {
+      const result = await pool.query(query);
+      res.json(result.rows);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+});
+
+
 
 
 // New endpoint for total data

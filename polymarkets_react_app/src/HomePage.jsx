@@ -1,10 +1,11 @@
 import React from 'react';
 import Chart1 from './Components/Chart1'; 
-import TotalDataComponent from './Components/TotalDataComponent';
+import TotalDataComponent from './Components/Overall Markets/TotalDataComponent';
 import VolumeChart from './Components/Popular Markets/VolumeChart'; 
 import LiquidityChart from './Components/Popular Markets/LiquidityChart'; 
 import SpreadChart from './Components/Popular Markets/SpreadChart'; 
 import BarVolumeChart from './Components/Popular Markets/BarVolumeChart'; 
+import MarketLiquidity from './Components/Overall Markets/MarketLiquidity';
 
 const HomePage = () => {
   return (
@@ -790,7 +791,7 @@ const HomePage = () => {
                         <div className="card">
                         <div className="card-body pb-0">
                             {/* Empty card body */}
-                            <BarVolumeChart id="chartPop-top" />
+                            <MarketLiquidity id="chartPop-top" />
                         </div>
                         </div>
                     </div>
