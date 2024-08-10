@@ -125,7 +125,7 @@ def main():
                 print("---------------------------------")
 
         # Sleep for a specified duration before starting the next cycle
-        sleep_duration = 3600  # sleep for 1 hour
+        sleep_duration = 10800  # sleep for 1 hour
         time.sleep(sleep_duration)
 
 if __name__ == "__main__":

@@ -15,7 +15,7 @@ const TotalDataComponent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://3.141.7.141:5000/api/totaldata');
+        const response = await axios.get('http://3.141.7.141:5000/api/overallData');
         if (response.data.length > 0) {
           const totalData = response.data[0];
           setTodayVolume24hr(parseFloat(totalData.today_avg_volume24hr));

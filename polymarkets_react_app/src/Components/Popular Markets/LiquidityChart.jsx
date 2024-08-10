@@ -13,7 +13,7 @@ import {
   Crosshair
 } from '@syncfusion/ej2-react-charts';
 
-function Chart1({ id }) {
+function LiquidityChart({ id }) {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [minDate, setMinDate] = useState(null);
@@ -22,7 +22,7 @@ function Chart1({ id }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://3.141.7.141:5000/api/liquidity');
+        const response = await axios.get('http://3.141.7.141:5000/api/popularMarkets');
         setData(response.data);
         
         // Find min and max dates
@@ -68,13 +68,11 @@ function Chart1({ id }) {
   };
 
   const tooltipRender = (args) => {
-    console.log('TooltipRender called', args);
     if (args.series && args.point) {
       const formattedValue = formatValue(args.point.y);
       args.text = `${args.series.name}: ${formattedValue}`;
     }
   };
-  
 
   return (
     <ChartComponent
@@ -135,4 +133,4 @@ function Chart1({ id }) {
   );
 }
 
-export default Chart1;
+export default LiquidityChart;

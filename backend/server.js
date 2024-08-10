@@ -51,7 +51,7 @@ app.get('/api/liquidity', async (req, res) => {
 });
 
 // New endpoint for total data
-app.get('/api/totaldata', async (req, res) => {
+app.get('/api/overallData', async (req, res) => {
   const query = `
           WITH MarketAverages AS (
           SELECT
@@ -103,19 +103,122 @@ app.get('/api/totaldata', async (req, res) => {
               Date = Date_trunc('day', NOW() - INTERVAL '1 day')
       )
       SELECT
+          yesterday_avg_volume24hr,
           today_avg_volume24hr,
           CASE WHEN yesterday_avg_volume24hr = 0 THEN NULL ELSE ((today_avg_volume24hr - yesterday_avg_volume24hr) / yesterday_avg_volume24hr) * 100 END AS pct_change_volume24hr,
           
+          yesterday_avg_volume,
           today_avg_volume,
           CASE WHEN yesterday_avg_volume = 0 THEN NULL ELSE ((today_avg_volume - yesterday_avg_volume) / yesterday_avg_volume) * 100 END AS pct_change_volume,
 
+          yesterday_avg_liquidity, 
           today_avg_liquidity,
           CASE WHEN yesterday_avg_liquidity = 0 THEN NULL ELSE ((today_avg_liquidity - yesterday_avg_liquidity) / yesterday_avg_liquidity) * 100 END AS pct_change_liquidity,
 
+          yesterday_total_markets, 
           today_total_markets,
           CASE WHEN yesterday_total_markets = 0 THEN NULL ELSE ((today_total_markets - yesterday_total_markets) / yesterday_total_markets::numeric) * 100 END AS pct_change_markets
       FROM
-          Today, Yesterday;  `;
+          Today, Yesterday;  
+  `;
+
+  try {
+    const result = await pool.query(query);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+
+// New endpoint for total data
+app.get('/api/popularMarkets', async (req, res) => {
+  const query = `
+            WITH VolumeData AS (
+        SELECT
+            Date_trunc('day', timestamp) AS Date,
+            question,
+            AVG(volume) AS average_volume
+        FROM
+            public.markets
+        GROUP BY
+            Date_trunc('day', timestamp),
+            question
+    ),
+    VolumeComparison AS (
+        SELECT
+            Date,
+            question,
+            average_volume,
+            LAG(average_volume, 3) OVER (PARTITION BY question ORDER BY Date) AS volume_three_days_ago
+        FROM
+            VolumeData
+    ),
+    TopVolumeChanges AS (
+        SELECT
+            Date,
+            question,
+            average_volume AS volume_today,
+            volume_three_days_ago,
+            ((average_volume - volume_three_days_ago) / NULLIF(volume_three_days_ago, 0)) * 100 AS percentage_change
+        FROM
+            VolumeComparison
+        WHERE
+            Date = Date_trunc('day', NOW())
+        AND
+            volume_three_days_ago IS NOT NULL
+        ORDER BY
+            percentage_change DESC
+        LIMIT 200
+    )
+
+
+    , SpreadFilter as (
+    SELECT
+        m.question,
+        AVG(m.spread) AS spread
+    FROM
+        public.markets m
+    WHERE
+        Date_trunc('day', m.timestamp) = Date_trunc('day', NOW())
+        AND m.question IN (SELECT question FROM TopVolumeChanges)
+    GROUP BY
+        m.question
+    ORDER BY
+        spread DESC 
+    LIMIT 50 
+    ) 
+
+    , tab_final as (
+    SELECT
+        m.question,
+        AVG(m.volume) AS volume
+    FROM
+        public.markets m
+    WHERE
+        Date_trunc('day', m.timestamp) = Date_trunc('day', NOW())
+        AND m.question IN (SELECT question FROM SpreadFilter)
+    GROUP BY
+        m.question
+    ORDER BY
+        volume DESC 
+    LIMIT 5
+    ) 
+
+
+    select 
+    Date_trunc('day', timestamp) as Date, 
+    question, 
+    avg(volume) as Total_Volume, 
+    avg(volume24hr) as Volume_24_Hour, 
+    avg(liquidity) as Liquidity,
+    avg(spread) as Spread
+
+    from public.markets 
+    where question in (select question from tab_final) 
+    group by 1,2  
+  `;
 
   try {
     const result = await pool.query(query);
