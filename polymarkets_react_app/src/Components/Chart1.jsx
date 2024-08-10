@@ -103,6 +103,7 @@ function Chart1({ id }) {
       }}
       tooltip={{
         enable: true, 
+        shared: true, 
         format: '${series.name}: ${point.y}'
       }}
       crosshair={{

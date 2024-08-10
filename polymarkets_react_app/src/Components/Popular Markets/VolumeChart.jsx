@@ -101,6 +101,7 @@ function VolumeChart({ id }) {
       }}
       tooltip={{
         enable: true, 
+        shared: true,
         format: '${series.name}: ${point.y}'
       }}
       crosshair={{

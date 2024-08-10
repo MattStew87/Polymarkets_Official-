@@ -13,7 +13,7 @@ import {
   Crosshair
 } from '@syncfusion/ej2-react-charts';
 
-function LiquidityChart({ id }) {
+function SpreadChart({ id }) {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [minDate, setMinDate] = useState(null);
@@ -44,7 +44,7 @@ function LiquidityChart({ id }) {
 
   const groupedData = data.reduce((acc, item) => {
     if (!acc[item.question]) acc[item.question] = [];
-    acc[item.question].push({ x: new Date(item.date), y: parseFloat(item.liquidity) });
+    acc[item.question].push({ x: new Date(item.date), y: parseFloat(item.spread) });
     return acc;
   }, {});
 
@@ -89,7 +89,7 @@ function LiquidityChart({ id }) {
         edgeLabelPlacement: 'Shift'
       }}
       primaryYAxis={{
-        title: 'Liquidity',
+        title: 'Spread',
         labelFormat: '${value}',
         majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
         minorGridLines: { width: 0 },
@@ -100,8 +100,8 @@ function LiquidityChart({ id }) {
         minorTicksPerInterval: 1
       }}
       tooltip={{
-        enable: true, 
-        shared: true,
+        enable: true,
+        shared: true, 
         format: '${series.name}: ${point.y}'
       }}
       crosshair={{
@@ -134,4 +134,4 @@ function LiquidityChart({ id }) {
   );
 }
 
-export default LiquidityChart;
+export default SpreadChart;

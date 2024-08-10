@@ -3,6 +3,8 @@ import Chart1 from './Components/Chart1';
 import TotalDataComponent from './Components/TotalDataComponent';
 import VolumeChart from './Components/Popular Markets/VolumeChart'; 
 import LiquidityChart from './Components/Popular Markets/LiquidityChart'; 
+import SpreadChart from './Components/Popular Markets/SpreadChart'; 
+
 
 const HomePage = () => {
   return (
@@ -809,7 +811,7 @@ const HomePage = () => {
                         <div className="card">
                         <div className="card-body pb-0">
                             {/* Empty card body */}
-                            <Chart1 id="chart1-right" />
+                            <SpreadChart id="chart1-right" />
                         </div>
                         </div>
                     </div>
