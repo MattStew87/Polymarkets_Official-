@@ -4,7 +4,7 @@ import TotalDataComponent from './Components/TotalDataComponent';
 import VolumeChart from './Components/Popular Markets/VolumeChart'; 
 import LiquidityChart from './Components/Popular Markets/LiquidityChart'; 
 import SpreadChart from './Components/Popular Markets/SpreadChart'; 
-
+import BarVolumeChart from './Components/Popular Markets/BarVolumeChart'; 
 
 const HomePage = () => {
   return (
@@ -485,16 +485,13 @@ const HomePage = () => {
                 </div>
                 <div className="d-lg-none d-xxl-flex align-items-center gap-4 px-4 scrollable-x">
                 <div className="d-flex gap-2 text-xs">
-                    <span className="text-heading fw-semibold">Cryptos:</span>{" "}
-                    <span className="text-muted">21,713</span>
+                    
                 </div>
                 <div className="d-flex gap-2 text-xs">
-                    <span className="text-heading fw-semibold">Market Cap:</span>{" "}
-                    <span className="text-muted">$871,322,862,585</span>
+                
                 </div>
                 <div className="d-flex gap-2 text-xs">
-                    <span className="text-heading fw-semibold">24h Vol:</span>{" "}
-                    <span className="text-muted">$180,639,667,232</span>
+             
                 </div>
                 </div>
                 <div className="hstack flex-fill justify-content-end flex-nowrap gap-6 ms-auto px-6 px-xxl-8">
@@ -793,7 +790,7 @@ const HomePage = () => {
                         <div className="card">
                         <div className="card-body pb-0">
                             {/* Empty card body */}
-                            <VolumeChart id="chartPop-top" />
+                            <BarVolumeChart id="chartPop-top" />
                         </div>
                         </div>
                     </div>

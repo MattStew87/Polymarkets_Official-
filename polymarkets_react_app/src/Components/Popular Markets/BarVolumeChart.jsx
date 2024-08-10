@@ -6,18 +6,16 @@ import {
   SeriesDirective,
   Inject,
   Legend,
-  DateTime,
+  Category,
   Tooltip,
   DataLabel,
-  LineSeries,
+  StackingColumnSeries,
   Crosshair
 } from '@syncfusion/ej2-react-charts';
 
-function SpreadChart({ id }) {
+function BarVolumeChart({ id }) {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
-  const [minDate, setMinDate] = useState(null);
-  const [maxDate, setMaxDate] = useState(null);
 
   const calmColors = ["#fd7f6f", "#7eb0d5", "#b2e061", "#bd7ebe", "#ffb55a", "#ffee65", "#beb9db", "#fdcce5", "#8bd3c7"];
 
@@ -26,11 +24,6 @@ function SpreadChart({ id }) {
       try {
         const response = await axios.get('http://3.141.7.141:5000/api/popularMarkets');
         setData(response.data);
-        
-        // Find min and max dates
-        const dates = response.data.map(item => new Date(item.date));
-        setMinDate(new Date(Math.min(...dates)));
-        setMaxDate(new Date(Math.max(...dates)));
       } catch (error) {
         console.error('Error fetching data:', error);
         setError(error.message);
@@ -45,22 +38,26 @@ function SpreadChart({ id }) {
   }
 
   const groupedData = data.reduce((acc, item) => {
-    if (!acc[item.question]) acc[item.question] = [];
-    acc[item.question].push({ x: new Date(item.date), y: parseFloat(item.spread) });
+    const date = new Date(item.date).toISOString().split('T')[0];
+    if (!acc[date]) acc[date] = {};
+    acc[date][item.question] = parseFloat(item.total_volume);
     return acc;
   }, {});
 
-  const marker = { visible: true, shape: 'Circle', width: 10, height: 10, border: { width: 1} };
+  const chartData = Object.entries(groupedData).map(([date, volumes]) => ({
+    x: date,
+    ...volumes
+  }));
 
   const formatValue = (value) => {
     if (Math.abs(value) >= 1000000000) {
-      return (value / 1000000000).toFixed(1) + 'B';
+      return '$' + (value / 1000000000).toFixed(1) + 'B';
     } else if (Math.abs(value) >= 1000000) {
-      return (value / 1000000).toFixed(1) + 'M';
+      return '$' + (value / 1000000).toFixed(1) + 'M';
     } else if (Math.abs(value) >= 1000) {
-      return (value / 1000).toFixed(1) + 'K';
+      return '$' + (value / 1000).toFixed(1) + 'K';
     }
-    return value.toFixed(2);
+    return '$' + value.toFixed(2);
   };
 
   const axisLabelRender = (args) => {
@@ -79,39 +76,31 @@ function SpreadChart({ id }) {
   return (
     <ChartComponent
       id={id}
-      title='Daily Average Spread of Trending Markets'
+      title='Daily Total Volume (USD) In Trending Markets'
       titleStyle={{
         fontFamily: 'Arial',
         fontWeight: '500',
         size: '18px'
       }}
       primaryXAxis={{
-        valueType: 'DateTime',
-        minimum: minDate,
-        maximum: maxDate,
-        intervalType: 'Days',
-        majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
-        minorGridLines: { width: 0 },
-        majorTickLines: { width: 2, height: 8, color: 'black',},
-        lineStyle: { color: 'black', width: 2},
-        edgeLabelPlacement: 'Shift'
+        valueType: 'Category',
+        majorGridLines: { width: 0 },
+        labelRotation: -45
       }}
       primaryYAxis={{
-        title: 'Spread',
+        title: 'Total Volume (USD)',
         labelFormat: '${value}',
         majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
-        minorGridLines: { width: 0 },
-        majorTickLines: { width: 2, height: 8, color: 'black',},
-        minorTickLines: { width: 2, height: 5, color: 'black'},
         lineStyle: { color: 'black', width: 2},
-        minimum: 0,
-        minorTicksPerInterval: 1
+        minimum: 0
       }}
-      tooltip={{
+      tooltip={{ 
         enable: true,
-        shared: true, 
-        format: '${series.name}: ${point.y}'
-      }}
+        shared: true 
+       }}
+      legendSettings={{ visible: true }}
+      axisLabelRender={axisLabelRender}
+      tooltipRender={tooltipRender}
       crosshair={{
         enable: true,
         lineType: 'Both',
@@ -119,22 +108,17 @@ function SpreadChart({ id }) {
           color: 'black'
         }
       }}
-      chartArea={{ border: { visible: false } }}
-      axisLabelRender={axisLabelRender}
-      tooltipRender={tooltipRender}
     >
-      <Inject services={[LineSeries, Crosshair, Legend, Tooltip, DataLabel, DateTime]} />
+      <Inject services={[StackingColumnSeries, Legend, Tooltip, DataLabel, Category, Crosshair]} />
       <SeriesCollectionDirective>
-        {Object.keys(groupedData).map((question, index) => (
+        {Object.keys(chartData[0] || {}).filter(key => key !== 'x').map((question, index) => (
           <SeriesDirective
             key={index}
-            dataSource={groupedData[question]}
-            xName="x"
-            yName="y"
+            dataSource={chartData}
+            xName='x'
+            yName={question}
             name={question}
-            width="2"
-            type="Line"
-            marker={marker}
+            type='StackingColumn'
             fill={calmColors[index % calmColors.length]}
           />
         ))}
@@ -143,4 +127,4 @@ function SpreadChart({ id }) {
   );
 }
 
-export default SpreadChart;
+export default BarVolumeChart;

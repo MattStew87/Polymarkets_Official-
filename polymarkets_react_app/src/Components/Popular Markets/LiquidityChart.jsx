@@ -19,6 +19,8 @@ function LiquidityChart({ id }) {
   const [minDate, setMinDate] = useState(null);
   const [maxDate, setMaxDate] = useState(null);
 
+  const calmColors = ["#fd7f6f", "#7eb0d5", "#b2e061", "#bd7ebe", "#ffb55a", "#ffee65", "#beb9db", "#fdcce5", "#8bd3c7"];
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -77,6 +79,12 @@ function LiquidityChart({ id }) {
   return (
     <ChartComponent
       id={id}
+       title='Daily Average Liquidity In Trending Markets'
+       titleStyle={{
+        fontFamily: 'Arial',
+        fontWeight: '500',
+        size: '18px'
+      }}
       primaryXAxis={{
         valueType: 'DateTime',
         minimum: minDate,
@@ -89,7 +97,7 @@ function LiquidityChart({ id }) {
         edgeLabelPlacement: 'Shift'
       }}
       primaryYAxis={{
-        title: 'Liquidity',
+        title: 'Market Liquidity (USD)', 
         labelFormat: '${value}',
         majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
         minorGridLines: { width: 0 },
@@ -127,6 +135,7 @@ function LiquidityChart({ id }) {
             width="2"
             type="Line"
             marker={marker}
+            fill={calmColors[index % calmColors.length]}
           />
         ))}
       </SeriesCollectionDirective>
