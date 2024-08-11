@@ -258,6 +258,28 @@ app.get('/api/popularMarkets', async (req, res) => {
   }
 });
 
+// New endpoint used by search bar
+// Just a list of all current events
+app.get('/api/searchEvents', async (req, res) => {
+    const query = `
+            SELECT 
+            distinct title
+            FROM public.events
+            where date_trunc('day', timestamp) = Date_trunc('day', NOW())    
+    `;
+  
+    try {
+      const result = await pool.query(query);
+      res.json(result.rows);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+});
+
+
+
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

@@ -7,6 +7,9 @@ import MarketLiquidity from './Components/Overall Markets/MarketLiquidity';
 import MarketVolume from './Components/Overall Markets/MarketVolume';
 import MarketVolume24hr from './Components/Overall Markets/MarketVolume24hr';
 
+import SearchBar from './Components/EM Search/SearchBar';
+
+
 const EventsMarkets = () => {
   return (
     <>
@@ -462,19 +465,6 @@ const EventsMarkets = () => {
             </nav>
             <div className="flex-lg-fill overflow-x-auto ps-lg-1 vstack vh-lg-100 position-relative">
             <div className="d-none d-lg-flex py-3">
-                <div className="flex-none">
-                <div className="input-group input-group-sm input-group-inline w-rem-64 rounded-pill">
-                    <span className="input-group-text rounded-start-pill">
-                    <i className="bi bi-search me-2" />{" "}
-                    </span>
-                    <input
-                    type="search"
-                    className="form-control ps-0 rounded-end-pill"
-                    placeholder="Search"
-                    aria-label="Search"
-                    />
-                </div>
-                </div>
                 <div className="d-lg-none d-xxl-flex align-items-center gap-4 px-4 scrollable-x">
                 <div className="d-flex gap-2 text-xs">
                     
@@ -746,7 +736,10 @@ const EventsMarkets = () => {
                 <div className="mb-6 mb-xl-10">
                     <div className="row g-3 align-items-center">
                     <div className="col">
-                        <h1 className="ls-tight">Polymarkets Markets and Events</h1>
+                        <h3 className="ls-tight">Markets and Events Search</h3>
+                      
+                        <SearchBar />
+
                     </div>
                     <div className="col">
                         <div className="hstack gap-2 justify-content-end">
