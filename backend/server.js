@@ -132,26 +132,28 @@ app.get('/api/overallData', async (req, res) => {
 });
 
 
-// New endpoint for Overall data by Market
-app.get('/api/overallMarketData', async (req, res) => {
+// New endpoint for Overall data overtime
+app.get('/api/overtimeData', async (req, res) => {
     const query = `
             With tab1 as (
             Select
+            date_trunc('day', timestamp) as Date, 
             Question, 
             avg(liquidity) as Liquidity, 
             avg(volume) as Volume, 
-            avg(volume24hr) as Volume24hr,
-            avg(spread) as Spread 
+            avg(volume24hr) as Volume24hr
             from public.markets 
-            where timestamp > current_date 
-            group by 1 
+            group by 1,2 
             )  
 
             Select
-            * 
-            from tab1 
-            order by Volume Desc 
-            limit 100    
+            Date, 
+            Sum(Liquidity) as Total_Liquidity, 
+            Sum(volume) as Total_Volume, 
+            Sum(volume24hr) as Total_Volume24hr
+            from tab1  
+            group by 1 
+            order by 1    
     `;
   
     try {

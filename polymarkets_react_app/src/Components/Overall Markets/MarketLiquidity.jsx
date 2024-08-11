@@ -17,12 +17,10 @@ function MarketLiquidity({ id }) {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
 
-  const colors = ["#fd7f6f", "#7eb0d5", "#b2e061", "#bd7ebe", "#ffb55a", "#ffee65", "#beb9db", "#fdcce5", "#8bd3c7"];
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://3.141.7.141:5000/api/overallMarketData');
+        const response = await axios.get('http://3.141.7.141:5000/api/overtimeData');
         setData(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -37,10 +35,9 @@ function MarketLiquidity({ id }) {
     return <div>Error: {error}</div>;
   }
 
-  const chartData = data.map((item, index) => ({
-    x: index,
-    y: parseFloat(item.liquidity),
-    question: item.question
+  const chartData = data.map(item => ({
+    x: new Date(item.date).toISOString().split('T')[0], // Format date as YYYY-MM-DD
+    y: parseFloat(item.total_liquidity)
   }));
 
   const formatValue = (value) => {
@@ -63,15 +60,14 @@ function MarketLiquidity({ id }) {
   const tooltipRender = (args) => {
     if (args.series && args.point) {
       const formattedValue = formatValue(args.point.y);
-      const question = chartData[args.point.index].question;
-      args.text = `${question}: ${formattedValue}`;
+      args.text = `Liquidity: ${formattedValue}`;
     }
   };
 
   return (
     <ChartComponent
       id={id}
-      title='Liquidity (USD) In Trending Markets'
+      title='Daily Total Liquidity (USD)'
       titleStyle={{
         fontFamily: 'Arial',
         fontWeight: '500',
@@ -80,10 +76,10 @@ function MarketLiquidity({ id }) {
       primaryXAxis={{
         valueType: 'Category',
         majorGridLines: { width: 0 },
-        labelStyle: { visible: false }
+        labelRotation: -45
       }}
       primaryYAxis={{
-        title: 'Liquidity (USD)', 
+        title: 'Total Liquidity (USD)',
         labelFormat: '${value}',
         majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
         lineStyle: { color: 'black', width: 2},
@@ -91,7 +87,7 @@ function MarketLiquidity({ id }) {
       }}
       tooltip={{ 
         enable: true
-      }}
+       }}
       legendSettings={{ visible: false }}
       axisLabelRender={axisLabelRender}
       tooltipRender={tooltipRender}
@@ -109,7 +105,9 @@ function MarketLiquidity({ id }) {
           dataSource={chartData}
           xName='x'
           yName='y'
+          name='Liquidity'
           type='Column'
+          fill='#7eb0d5'
           columnWidth={0.8}
           columnSpacing={0.1}
         />
