@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import TotalDataComponent from './Components/Overall Markets/TotalDataComponent';
 
@@ -375,7 +375,7 @@ const EventsMarkets = () => {
                     >
                     <div>
                         <div className="avatar avatar-sm text-bg-secondary rounded-circle">
-                        AE
+                            <img src={`${process.env.PUBLIC_URL}/Mushroom_Pine.PNG`} alt="Mushroom Pine" />
                         </div>
                     </div>
                     <div className="d-none d-sm-block ms-3">
@@ -430,23 +430,27 @@ const EventsMarkets = () => {
                 >
                 <ul className="navbar-nav">
                     <li className="nav-item my-1">
-                        <Link
-                        className="nav-link d-flex align-items-center rounded-pill active"
-                        to="/"
+                        <NavLink
+                        className={({ isActive }) =>
+                            `nav-link d-flex align-items-center rounded-pill ${isActive ? 'active' : ''}`
+                        }
+                        to="/HomePage"
                         >
                         <i className="bi bi-house-fill" /> <span>Home Page</span>
                         <span className="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto" />
-                        </Link>
+                        </NavLink>
                     </li>
 
                     <li className="nav-item my-1">
-                        <Link
-                        className="nav-link d-flex align-items-center rounded-pill active"
+                        <NavLink
+                        className={({ isActive }) =>
+                            `nav-link d-flex align-items-center rounded-pill ${isActive ? 'active' : ''}`
+                        }
                         to="/events-markets"
                         >
                         <i className="bi bi-house-fill" /> <span>Events/Markets</span>
                         <span className="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto" />
-                        </Link>
+                        </NavLink>
                     </li>
                 </ul>
                 
@@ -693,7 +697,7 @@ const EventsMarkets = () => {
                     aria-haspopup="false"
                     aria-expanded="false"
                     >
-                    <img src="/img/memoji/memoji-1.svg" />
+                    <img src={`${process.env.PUBLIC_URL}/Mushroom_Pine.PNG`} alt="Mushroom Pine" />
                     </a>
                     <div className="dropdown-menu dropdown-menu-end">
                     <div className="dropdown-header">

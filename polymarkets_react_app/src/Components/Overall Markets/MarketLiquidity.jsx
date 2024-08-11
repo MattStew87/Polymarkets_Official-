@@ -92,7 +92,6 @@ function MarketLiquidity({ id }) {
         minimum: minDate,
         maximum: maxDate,
         intervalType: 'Days',
-        majorGridLines: { width: 0 },
         majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
         minorGridLines: { width: 0 },
         majorTickLines: { width: 2, height: 8, color: 'black'}, 

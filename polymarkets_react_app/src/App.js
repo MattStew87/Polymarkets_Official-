@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import EventMarkets from './EventsMarkets';
 import HomePage from './HomePage';
 
@@ -8,7 +8,13 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        {/* Redirect from root path to /HomePage */}
+        <Route path="/" element={<Navigate to="/HomePage" />} />
+        
+        {/* Define the /HomePage route */}
+        <Route path="/HomePage" element={<HomePage />} />
+        
+        {/* Define the /events-markets route */}
         <Route path="/events-markets" element={<EventMarkets />} />
       </Routes>
     </div>
