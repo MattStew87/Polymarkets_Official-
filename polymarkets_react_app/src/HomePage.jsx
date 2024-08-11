@@ -27,6 +27,7 @@ const HomePage = () => {
             rel="stylesheet"
             href="https://api.fontshare.com/v2/css?f=satoshi@900,700,500,300,401,400&display=swap"
         />
+        <div className="bg-body-tertiary">
         <div
             className="modal fade"
             id="depositLiquidityModal"
@@ -333,7 +334,7 @@ const HomePage = () => {
         </div>
         <div className="d-flex flex-column flex-lg-row h-lg-100 gap-1">
             <nav
-            className="flex-none navbar navbar-vertical navbar-expand-lg navbar-light bg-transparent show vh-lg-100 px-0 py-2"
+            className="flex-none navbar navbar-vertical navbar-expand-lg navbar-light show vh-lg-100 px-0 py-2 bg-transparent"
             id="sidebar"
             >
             <div className="container-fluid px-3 px-md-4 px-lg-6">
@@ -807,6 +808,7 @@ const HomePage = () => {
                 </main>
             </div>
             </div>
+        </div>
         </div>
     </>
 
