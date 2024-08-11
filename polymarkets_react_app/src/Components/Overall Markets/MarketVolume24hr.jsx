@@ -13,7 +13,7 @@ import {
   Crosshair
 } from '@syncfusion/ej2-react-charts';
 
-function MarketLiquidity({ id }) {
+function MarketVolume24hr({ id }) {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [minDate, setMinDate] = useState(null);
@@ -51,7 +51,7 @@ function MarketLiquidity({ id }) {
 
   const chartData = data.map(item => ({
     x: new Date(item.date), // Use the Date object directly
-    y: parseFloat(item.total_liquidity)
+    y: parseFloat(item.total_volume24hr)
   }));
 
   const formatValue = (value) => {
@@ -81,7 +81,7 @@ function MarketLiquidity({ id }) {
   return (
     <ChartComponent
       id={id}
-      title='Daily Total Liquidity (USD)'
+      title='Daily 24 Hour Volume (USD)'
       titleStyle={{
         fontFamily: 'Arial',
         fontWeight: '500',
@@ -99,7 +99,7 @@ function MarketLiquidity({ id }) {
         edgeLabelPlacement: 'Shift'
       }}
       primaryYAxis={{
-        title: 'Total Liquidity (USD)',
+        title: '24 Hour Volume (USD)',
         labelFormat: '${value}',
         majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
         minorGridLines: { width: 0 },
@@ -129,7 +129,7 @@ function MarketLiquidity({ id }) {
           dataSource={chartData}
           xName='x'
           yName='y'
-          name='Liquidity'
+          name='24 Hour Volume'
           type='Column'
           fill='#7eb0d5'
           columnWidth={0.8}
@@ -140,4 +140,4 @@ function MarketLiquidity({ id }) {
   );
 }
 
-export default MarketLiquidity;
+export default MarketVolume24hr;

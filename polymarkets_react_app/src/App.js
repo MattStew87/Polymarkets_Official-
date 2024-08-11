@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import HomePage from './HomePage';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Route, Routes } from 'react-router-dom';
+import EventMarkets from './EventsMarkets';
+import HomePage from './HomePage';
 
 function App() {
-  const [error, setError] = useState(null);
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
   return (
     <div className="App">
-      <HomePage />  
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/events-markets" element={<EventMarkets />} />
+      </Routes>
     </div>
   );
 }

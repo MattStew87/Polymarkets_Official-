@@ -19,17 +19,8 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
-app.get('/api/markets', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM markets LIMIT 5');
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
-  }
-});
 
-// New endpoint for liquidity
+// New endpoint for liquidity used in TestChart.jsx 
 app.get('/api/liquidity', async (req, res) => {
   const query = `
     SELECT 
@@ -50,7 +41,7 @@ app.get('/api/liquidity', async (req, res) => {
   }
 });
 
-// New endpoint for Overall Data 
+// New endpoint for Overall Data used in TotalDataComponent.jsx 
 app.get('/api/overallData', async (req, res) => {
   const query = `
           WITH MarketAverages AS (
@@ -132,7 +123,8 @@ app.get('/api/overallData', async (req, res) => {
 });
 
 
-// New endpoint for Overall data overtime
+// New endpoint for Overall data overtime used in 
+// MarketVolume.jsx, MarketVolume24hr.jsx, and MarketLiquidity.jsx
 app.get('/api/overtimeData', async (req, res) => {
     const query = `
             With tab1 as (
@@ -168,7 +160,8 @@ app.get('/api/overtimeData', async (req, res) => {
 
 
 
-// New endpoint for total data
+// Gets trending markets used in are chart in Popular Markets Folder
+// Delete (Eventually) 
 app.get('/api/popularMarkets', async (req, res) => {
   const query = `
             WITH VolumeData AS (

@@ -7,7 +7,7 @@ import MarketLiquidity from './Components/Overall Markets/MarketLiquidity';
 import MarketVolume from './Components/Overall Markets/MarketVolume';
 import MarketVolume24hr from './Components/Overall Markets/MarketVolume24hr';
 
-const HomePage = () => {
+const EventsMarkets = () => {
   return (
     <>
         <meta charSet="UTF-8" />
@@ -740,7 +740,7 @@ const HomePage = () => {
                 <div className="mb-6 mb-xl-10">
                     <div className="row g-3 align-items-center">
                     <div className="col">
-                        <h1 className="ls-tight">Polymarkets Data</h1>
+                        <h1 className="ls-tight">Polymarkets Markets and Events</h1>
                     </div>
                     <div className="col">
                         <div className="hstack gap-2 justify-content-end">
@@ -809,4 +809,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default EventsMarkets;
