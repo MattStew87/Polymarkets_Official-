@@ -14,7 +14,6 @@ const TotalData = ({ event }) => {
     if (event) {  
       const fetchData = async () => {
         try {
-          console.log('Fetching data for event:', event);
           const response = await axios.get('http://3.141.7.141:5000/api/eventOverall', {
               params: { title: event }  
           });
@@ -45,10 +44,7 @@ const TotalData = ({ event }) => {
     return <div>{error}</div>;
   }
 
-  if (!todayVolume && !todayVolume24hr && !todayLiquidity) {
-    console.log('Data is still loading...');
-    return <div>Loading...</div>;
-  }
+ 
 
 
   const getCardClasses = (change) => {
@@ -68,7 +64,7 @@ const TotalData = ({ event }) => {
     };
 
   return (
-    <div className="row row-cols-xl-4 g-3 g-xl-6">
+    <div className="row row-cols-xl-3 g-3 g-xl-6">
       {/* Total Volume Card */}
       <div className="col">
         <div className={getCardClasses(pctChangeVolume)}>
