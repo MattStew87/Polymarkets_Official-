@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+
 
 import TotalDataComponent from './Components/Overall Markets/TotalDataComponent';
 
@@ -8,9 +9,17 @@ import MarketVolume from './Components/Overall Markets/MarketVolume';
 import MarketVolume24hr from './Components/Overall Markets/MarketVolume24hr';
 
 import SearchBar from './Components/EM Search/SearchBar';
+import TotalData from './Components/EM Search/TotalData';
 
 
 const EventsMarkets = () => {
+    const [selectedEvent, setSelectedEvent] = useState(null);
+
+    const handleEventSelection = (event) => {
+        setSelectedEvent(event.title);  // Log only the title if needed
+      };
+
+
   return (
     <>
         <meta charSet="UTF-8" />
@@ -738,7 +747,7 @@ const EventsMarkets = () => {
                     <div className="col">
                         <h3 className="ls-tight">Markets and Events Search</h3>
                       
-                        <SearchBar />
+                        <SearchBar onSelectEvent={handleEventSelection}/>
 
                     </div>
                     <div className="col">
@@ -767,7 +776,7 @@ const EventsMarkets = () => {
                 <div className="vstack gap-3 gap-xl-6">
                     
                         {/* OVERALL DATA */}
-                        <TotalDataComponent />
+                        <TotalData event={selectedEvent}/>
                         {/* OVERALL DATA */}
 
                     <div className="row g-3 g-xl-6">
