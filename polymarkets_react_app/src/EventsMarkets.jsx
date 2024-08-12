@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
-
-import TotalDataComponent from './Components/Overall Markets/TotalDataComponent';
-
 import MarketLiquidity from './Components/Overall Markets/MarketLiquidity';
 import MarketVolume from './Components/Overall Markets/MarketVolume';
 import MarketVolume24hr from './Components/Overall Markets/MarketVolume24hr';
@@ -745,8 +742,7 @@ const EventsMarkets = () => {
                 <div className="mb-6 mb-xl-10">
                     <div className="row g-3 align-items-center">
                     <div className="col">
-                        <h3 className="ls-tight">Markets and Events Search</h3>
-                      
+    
                         <SearchBar onSelectEvent={handleEventSelection}/>
 
                     </div>
