@@ -29,7 +29,7 @@ const TotalData = ({ event }) => {
           } else {
             setError('No data found');
           }
-        } catch (err) {
+        } catch (err) { 
           console.error('Error fetching data:', err);
           setError('Error fetching data');
         }

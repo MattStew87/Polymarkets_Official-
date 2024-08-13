@@ -18,7 +18,7 @@ function SearchBar({ onSelectEvent }) {
         console.error('Error fetching data:', error);
         setError(error.message); 
       }
-    };
+    }; 
     fetchData();
   }, []);
 

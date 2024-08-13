@@ -8,7 +8,11 @@ import MarketVolume24hr from './Components/Overall Markets/MarketVolume24hr';
 import SearchBar from './Components/EM Search/SearchBar';
 import TotalData from './Components/EM Search/TotalData';
 
+import EventVolume from './Components/EM Search/EventVolume';
+import EventLiquidity from './Components/EM Search/EventLiquidity';
+import Event24hrVolume from './Components/EM Search/Event24hrVolume';
 
+ 
 const EventsMarkets = () => {
     const [selectedEvent, setSelectedEvent] = useState(null);
 
@@ -780,7 +784,8 @@ const EventsMarkets = () => {
                         <div className="card">
                         <div className="card-body pb-0">
                             {/* Empty card body */}
-                            <MarketLiquidity id="chartPop-top" />
+                            <EventVolume event={selectedEvent} />
+                            
                         </div>
                         </div>
                     </div>
@@ -790,7 +795,7 @@ const EventsMarkets = () => {
                         <div className="card">
                         <div className="card-body pb-3">
                             {/* Empty card body */} 
-                            <MarketVolume id="chart-left" />
+                            <EventLiquidity event={selectedEvent} />
                         </div>
                         </div>
                     </div>
@@ -798,7 +803,7 @@ const EventsMarkets = () => {
                         <div className="card">
                         <div className="card-body pb-0">
                             {/* Empty card body */}
-                            <MarketVolume24hr id="chart1-right" />
+                            <Event24hrVolume event={selectedEvent} />
                         </div>
                         </div>
                     </div>
