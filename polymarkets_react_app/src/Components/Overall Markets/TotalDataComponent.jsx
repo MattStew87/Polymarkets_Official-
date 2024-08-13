@@ -41,20 +41,39 @@ const TotalDataComponent = () => {
   }
 
   const getCardClasses = (change) => {
-    return change >= 0 ? 'card bg-success bg-opacity-10 border-success border-opacity-40' : 'card bg-danger bg-opacity-10 border-danger border-opacity-40';
-  };
+    if (Math.abs(change) <= 1.5) {
+        return 'card bg-warning bg-opacity-10 border-warning border-opacity-40';
+    } else if (change > 1.5) {
+        return 'card bg-success bg-opacity-10 border-success border-opacity-40';
+    } else {
+        return 'card bg-danger bg-opacity-10 border-danger border-opacity-40';
+    }
+};
 
-  const getBadgeClasses = (change) => {
-    return change >= 0 ? 'badge bg-success bg-opacity-25 text-success' : 'badge bg-danger bg-opacity-25 text-danger';
-  };
+const getBadgeClasses = (change) => {
+    if (Math.abs(change) <= 1.5) {
+        return 'badge bg-warning bg-opacity-25 text-warning';
+    } else if (change > 1.5) {
+        return 'badge bg-success bg-opacity-25 text-success';
+    } else {
+        return 'badge bg-danger bg-opacity-25 text-danger';
+    }
+};
+
+const getArrowBadgeClasses = (change) => {
+    if (Math.abs(change) <= 1.5) {
+        return 'badge badge-count bg-warning text-xs rounded-circle';
+    } else if (change > 1.5) {
+        return 'badge badge-count bg-success text-xs rounded-circle';
+    } else {
+        return 'badge badge-count bg-danger text-xs rounded-circle';
+    }
+};
 
   const getArrowIcon = (change) => {
     return change >= 0 ? 'bi bi-arrow-up-right' : 'bi bi-arrow-down-left';
   };
 
-  const getArrowBadgeClasses = (change) => {
-    return change >= 0 ? 'badge badge-count bg-success text-xs rounded-circle' : 'badge badge-count bg-danger text-xs rounded-circle';
-  };
 
   return (
     <div className="row row-cols-xl-4 g-3 g-xl-6">
