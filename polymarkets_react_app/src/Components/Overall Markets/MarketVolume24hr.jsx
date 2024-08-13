@@ -94,8 +94,7 @@ function MarketVolume24hr({ id }) {
         intervalType: 'Days',
         majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
         minorGridLines: { width: 0 },
-        majorTickLines: { width: 2, height: 8, color: 'black'}, 
-        edgeLabelPlacement: 'Shift'
+        majorTickLines: { width: 2, height: 8, color: 'black'}
       }}
       primaryYAxis={{
         title: '24 Hour Volume (USD)',
@@ -130,7 +129,7 @@ function MarketVolume24hr({ id }) {
           yName='y'
           name='24 Hour Volume'
           type='Column'
-          fill='#7eb0d5'
+          fill='#0bb4ff'
           columnWidth={0.8}
           columnSpacing={0.1}
         />

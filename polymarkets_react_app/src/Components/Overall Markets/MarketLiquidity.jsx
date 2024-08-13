@@ -7,7 +7,7 @@ import {
   Inject,
   Legend,
   DateTime,
-  Tooltip,
+  Tooltip, 
   DataLabel,
   ColumnSeries,
   Crosshair
@@ -94,8 +94,8 @@ function MarketLiquidity({ id }) {
         intervalType: 'Days',
         majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
         minorGridLines: { width: 0 },
-        majorTickLines: { width: 2, height: 8, color: 'black'}, 
-        edgeLabelPlacement: 'Shift'
+        majorTickLines: { width: 2, height: 8, color: 'black'} 
+        
       }}
       primaryYAxis={{
         title: 'Total Liquidity (USD)',
@@ -130,7 +130,7 @@ function MarketLiquidity({ id }) {
           yName='y'
           name='Liquidity'
           type='Column'
-          fill='#7eb0d5'
+          fill='#0bb4ff'
           columnWidth={0.8}
           columnSpacing={0.1}
         />
