@@ -89,12 +89,15 @@ function EventLiquidity({ event }) {
   };
 
   const tooltipRender = (args) => {
-    if (args.series && args.point) {
-      const formattedValue = formatValue(args.point.y);
-      args.text = `${args.series.name}: ${formattedValue}`;
-    }
+    let tooltipData = args.series.map((series, index) => ({
+      name: series.name,
+      y: args.point[index].y,
+      formattedValue: formatValue(args.point[index].y)
+    }));
+  
+    tooltipData.sort((a, b) => b.y - a.y);
+    args.text = tooltipData.map(item => `${item.name}: ${item.formattedValue}`);
   };
-
   return (
     <ChartComponent
       id="event-liquidity-chart"
@@ -106,7 +109,6 @@ function EventLiquidity({ event }) {
       }}
       primaryXAxis={{
         valueType: 'DateTime',
-        labelFormat: 'dd/MM/yyyy',
         edgeLabelPlacement: 'Shift',
         minimum: minDate,
         maximum: maxDate,
@@ -121,13 +123,14 @@ function EventLiquidity({ event }) {
         lineStyle: { color: 'black', width: 2},
         minimum: 0
       }}
-      tooltip={{ 
+      tooltip={{
         enable: true,
-        shared: true 
+        shared: true,
+        format: '${series.name}: ${point.y}'
       }}
       legendSettings={{ visible: true }}
       axisLabelRender={axisLabelRender}
-      tooltipRender={tooltipRender}
+      sharedTooltipRender={tooltipRender}
       crosshair={{
         enable: true,
         lineType: 'Vertical',
