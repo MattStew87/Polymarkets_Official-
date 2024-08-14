@@ -19,7 +19,7 @@ function EventVolume({ event }) {
   const [minDate, setMinDate] = useState(null);
   const [maxDate, setMaxDate] = useState(null);
 
-  const calmColors = ["#e60049", "#0bb4ff", "#50e991", "#e6d800", "#9b19f5", "#ffa300", "#dc0ab4", "#b3d4ff", "#00bfa0"];
+  const calmColors = ["#ea5545", "#f46a9b", "#ef9b20", "#edbf33", "#ede15b", "#bdcf32", "#87bc45", "#27aeef", "#b33dc6"]
 
   useEffect(() => {
     const fetchData = async () => {
@@ -114,8 +114,7 @@ function EventVolume({ event }) {
         minimum: minDate,
         maximum: maxDate,
         majorGridLines: { width: 0 },
-        intervalType: 'Days',
-        labelRotation: -45
+        intervalType: 'Days'
       }}
       primaryYAxis={{
         title: 'Total Volume',

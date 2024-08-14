@@ -463,7 +463,7 @@ const EventsMarkets = () => {
                         }
                         to="/events-markets"
                         >
-                        <i className="bi bi-house-fill" /> <span>Events/Markets</span>
+                        <i class="bi bi-search me-2"></i> <span>Search Events</span>
                         <span className="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto" />
                         </NavLink>
                     </li>
