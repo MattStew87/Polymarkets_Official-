@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import EventMarkets from './EventsMarkets';
 import HomePage from './HomePage';
+import MarketComparison from './MarketComparison';
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
         
         {/* Define the /events-markets route */}
         <Route path="/events-markets" element={<EventMarkets />} />
+
+        <Route path="/market-comparison" element={<MarketComparison />} />
+
       </Routes>
     </div>
   );

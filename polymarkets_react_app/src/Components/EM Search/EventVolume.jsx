@@ -102,6 +102,7 @@ function EventVolume({ event }) {
   return (
     <ChartComponent
       id="event-volume-chart"
+      width = "95%"
       title={`Daily Total Volume for ${event}`}
       titleStyle={{
         fontFamily: 'Arial',
@@ -110,17 +111,24 @@ function EventVolume({ event }) {
       }}
       primaryXAxis={{
         valueType: 'DateTime',
-        edgeLabelPlacement: 'Shift',
         minimum: minDate,
         maximum: maxDate,
-        majorGridLines: { width: 0 },
-        intervalType: 'Days'
+        intervalType: 'Days',
+        majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
+        minorGridLines: { width: 0 },
+        majorTickLines: { width: 2, height: 8, color: 'black'},
+        edgeLabelPlacement: 'Shift',
+        lineStyle: { color: 'black', width: 2}
       }}
       primaryYAxis={{
         labelFormat: '${value}',
         majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
+        minorGridLines: { width: 0 },
+        majorTickLines: { width: 2, height: 8, color: 'black'},
+        minorTickLines: { width: 2, height: 5, color: 'black'},
         lineStyle: { color: 'black', width: 2},
-        minimum: 0
+        minimum: 0,
+        minorTicksPerInterval: 1
       }}
       tooltip={{
         enable: true,

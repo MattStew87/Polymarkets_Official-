@@ -453,6 +453,18 @@ const HomePage = () => {
                         <span className="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto" />
                         </NavLink>
                     </li>
+
+                    <li className="nav-item my-1">
+                        <NavLink
+                        className={({ isActive }) =>
+                            `nav-link d-flex align-items-center rounded-pill ${isActive ? 'active' : ''}`
+                        }
+                        to="/market-comparison"
+                        >
+                        <i class="bi bi-search me-2"></i> <span>Market Comparison</span>
+                        <span className="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto" />
+                        </NavLink>
+                    </li>
                 </ul>
                 
                 <hr className="navbar-divider my-5 opacity-70" />

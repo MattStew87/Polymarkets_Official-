@@ -81,6 +81,7 @@ function MarketLiquidity({ id }) {
   return (
     <ChartComponent
       id={id}
+      width = "97%"
       title='Daily Total Liquidity (USD)'
       titleStyle={{
         fontFamily: 'Arial',
@@ -94,7 +95,9 @@ function MarketLiquidity({ id }) {
         intervalType: 'Days',
         majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
         minorGridLines: { width: 0 },
-        majorTickLines: { width: 2, height: 8, color: 'black'} 
+        majorTickLines: { width: 2, height: 8, color: 'black'},
+        edgeLabelPlacement: 'Shift', 
+        lineStyle: { color: 'black', width: 2}
         
       }}
       primaryYAxis={{

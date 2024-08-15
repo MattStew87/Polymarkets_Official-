@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import MarketLiquidity from './Components/Overall Markets/MarketLiquidity';
-import MarketVolume from './Components/Overall Markets/MarketVolume';
-import MarketVolume24hr from './Components/Overall Markets/MarketVolume24hr';
 
 import SearchBar from './Components/EM Search/SearchBar';
 import TotalData from './Components/EM Search/TotalData';
@@ -13,7 +10,7 @@ import EventLiquidity from './Components/EM Search/EventLiquidity';
 import Event24hrVolume from './Components/EM Search/Event24hrVolume';
 
  
-const EventsMarkets = () => {
+const MarketComparison = () => {
     const [selectedEvent, setSelectedEvent] = useState(null);
 
     const handleEventSelection = (event) => {
@@ -479,6 +476,7 @@ const EventsMarkets = () => {
                         <span className="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto" />
                         </NavLink>
                     </li>
+                    
                 </ul>
                 
                 <hr className="navbar-divider my-5 opacity-70" />  
@@ -867,4 +865,4 @@ const EventsMarkets = () => {
   );
 };
 
-export default EventsMarkets;
+export default MarketComparison;

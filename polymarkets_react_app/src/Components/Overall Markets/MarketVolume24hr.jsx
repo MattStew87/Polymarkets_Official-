@@ -81,6 +81,7 @@ function MarketVolume24hr({ id }) {
   return (
     <ChartComponent
       id={id}
+      width = "97%"
       title='Daily 24 Hour Volume (USD)'
       titleStyle={{
         fontFamily: 'Arial',
@@ -94,7 +95,8 @@ function MarketVolume24hr({ id }) {
         intervalType: 'Days',
         majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
         minorGridLines: { width: 0 },
-        majorTickLines: { width: 2, height: 8, color: 'black'}
+        majorTickLines: { width: 2, height: 8, color: 'black'},
+        lineStyle: { color: 'black', width: 2}
       }}
       primaryYAxis={{
         labelFormat: '${value}',
