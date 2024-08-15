@@ -84,7 +84,7 @@ function MarketVolume({ id }) {
       title='Daily Total Volume (USD)'
       titleStyle={{
         fontFamily: 'Arial',
-        fontWeight: '500',
+        fontWeight: '600',
         size: '18px'
       }}
       primaryXAxis={{
@@ -97,7 +97,6 @@ function MarketVolume({ id }) {
         majorTickLines: { width: 2, height: 8, color: 'black'}
       }}
       primaryYAxis={{
-        title: 'Total Volume (USD)',
         labelFormat: '${value}',
         majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
         minorGridLines: { width: 0 },

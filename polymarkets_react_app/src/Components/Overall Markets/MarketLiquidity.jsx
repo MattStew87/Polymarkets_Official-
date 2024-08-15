@@ -84,7 +84,7 @@ function MarketLiquidity({ id }) {
       title='Daily Total Liquidity (USD)'
       titleStyle={{
         fontFamily: 'Arial',
-        fontWeight: '500',
+        fontWeight: '600',
         size: '18px'
       }}
       primaryXAxis={{
@@ -98,7 +98,6 @@ function MarketLiquidity({ id }) {
         
       }}
       primaryYAxis={{
-        title: 'Total Liquidity (USD)',
         labelFormat: '${value}',
         majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
         minorGridLines: { width: 0 },

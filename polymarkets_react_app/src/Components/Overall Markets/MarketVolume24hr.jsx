@@ -84,7 +84,7 @@ function MarketVolume24hr({ id }) {
       title='Daily 24 Hour Volume (USD)'
       titleStyle={{
         fontFamily: 'Arial',
-        fontWeight: '500',
+        fontWeight: '600',
         size: '18px'
       }}
       primaryXAxis={{
@@ -97,7 +97,6 @@ function MarketVolume24hr({ id }) {
         majorTickLines: { width: 2, height: 8, color: 'black'}
       }}
       primaryYAxis={{
-        title: '24 Hour Volume (USD)',
         labelFormat: '${value}',
         majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
         minorGridLines: { width: 0 },

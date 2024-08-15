@@ -48,7 +48,7 @@ app.get('/api/liquidity', async (req, res) => {
 // Delete (Eventually) 
 app.get('/api/popularMarkets', async (req, res) => {
     const query = `
-              WITH VolumeData AS (
+     WITH VolumeData AS (
           SELECT
               Date_trunc('day', timestamp) AS Date,
               question,
@@ -149,73 +149,79 @@ app.get('/api/popularMarkets', async (req, res) => {
 // Fetches total and daily perent changes in totals 
 app.get('/api/overallData', async (req, res) => {
   const query = `
-          WITH MarketAverages AS (
-          SELECT
-              Date_trunc('day', timestamp) AS Date,
-              question,
-              AVG(volume24hr) AS avg_volume24hr,
-              AVG(volume) AS avg_volume,
-              AVG(liquidity) AS avg_liquidity
-          FROM
-              public.markets
-          WHERE
-              Date_trunc('day', timestamp) IN (Date_trunc('day', NOW()), Date_trunc('day', NOW() - INTERVAL '1 day'))
-          GROUP BY
-              Date_trunc('day', timestamp),
-              question
-      ),
-      SummedAverages AS (
-          SELECT
-              Date,
-              SUM(avg_volume24hr) AS total_avg_volume24hr,
-              SUM(avg_volume) AS total_avg_volume,
-              SUM(avg_liquidity) AS total_avg_liquidity,
-              COUNT(DISTINCT question) AS total_markets
-          FROM
-              MarketAverages
-          GROUP BY
-              Date
-      ),
-      Today AS (
-          SELECT
-              total_avg_volume24hr AS today_avg_volume24hr,
-              total_avg_volume AS today_avg_volume,
-              total_avg_liquidity AS today_avg_liquidity,
-              total_markets AS today_total_markets
-          FROM
-              SummedAverages
-          WHERE
-              Date = Date_trunc('day', NOW())
-      ),
-      Yesterday AS (
-          SELECT
-              total_avg_volume24hr AS yesterday_avg_volume24hr,
-              total_avg_volume AS yesterday_avg_volume,
-              total_avg_liquidity AS yesterday_avg_liquidity,
-              total_markets AS yesterday_total_markets
-          FROM
-              SummedAverages
-          WHERE
-              Date = Date_trunc('day', NOW() - INTERVAL '1 day')
-      )
-      SELECT
-          yesterday_avg_volume24hr,
-          today_avg_volume24hr,
-          CASE WHEN yesterday_avg_volume24hr = 0 THEN NULL ELSE ((today_avg_volume24hr - yesterday_avg_volume24hr) / yesterday_avg_volume24hr) * 100 END AS pct_change_volume24hr,
-          
-          yesterday_avg_volume,
-          today_avg_volume,
-          CASE WHEN yesterday_avg_volume = 0 THEN NULL ELSE ((today_avg_volume - yesterday_avg_volume) / yesterday_avg_volume) * 100 END AS pct_change_volume,
+        WITH MarketAverages24 AS (
+            SELECT
+                question,
+                AVG(volume24hr) AS volume24hr,
+                AVG(volume) AS volume,
+                AVG(liquidity) AS liquidity
+            FROM
+                public.markets
+            WHERE timestamp >= NOW() - INTERVAL '24 hours'
+            GROUP BY
+                question
+        ),
+        MarketAverages48 AS (
+            SELECT
+                question,
+                AVG(volume24hr) AS volume24hr,
+                AVG(volume) AS volume,
+                AVG(liquidity) AS liquidity
+            FROM
+                public.markets
+            WHERE timestamp >= NOW() - INTERVAL '48 hours'
+                AND timestamp < NOW() - INTERVAL '24 hours'
+            GROUP BY
+                question
+        ),
+        SummedAverages24 AS (
+            SELECT
+                SUM(volume24hr) AS total_volume24hr_24,
+                SUM(volume) AS total_volume_24,
+                SUM(liquidity) AS total_liquidity_24,
+                COUNT(DISTINCT question) AS total_markets_24
+            FROM
+                MarketAverages24
+        ),
+        SummedAverages48 AS (
+            SELECT
+                SUM(volume24hr) AS total_volume24hr_48,
+                SUM(volume) AS total_volume_48,
+                SUM(liquidity) AS total_liquidity_48,
+                COUNT(DISTINCT question) AS total_markets_48
+            FROM
+                MarketAverages48
+        )
+        SELECT
+            sa48.total_volume24hr_48 AS yesterday_avg_volume24hr,
+            sa24.total_volume24hr_24 AS today_avg_volume24hr,
+            CASE 
+                WHEN sa48.total_volume24hr_48 = 0 THEN NULL 
+                ELSE ((sa24.total_volume24hr_24 - sa48.total_volume24hr_48) / sa48.total_volume24hr_48) * 100 
+            END AS pct_change_volume24hr,
 
-          yesterday_avg_liquidity, 
-          today_avg_liquidity,
-          CASE WHEN yesterday_avg_liquidity = 0 THEN NULL ELSE ((today_avg_liquidity - yesterday_avg_liquidity) / yesterday_avg_liquidity) * 100 END AS pct_change_liquidity,
+            sa48.total_volume_48 AS yesterday_avg_volume,
+            sa24.total_volume_24 AS today_avg_volume,
+            CASE 
+                WHEN sa48.total_volume_48 = 0 THEN NULL 
+                ELSE ((sa24.total_volume_24 - sa48.total_volume_48) / sa48.total_volume_48) * 100 
+            END AS pct_change_volume,
 
-          yesterday_total_markets, 
-          today_total_markets,
-          CASE WHEN yesterday_total_markets = 0 THEN NULL ELSE ((today_total_markets - yesterday_total_markets) / yesterday_total_markets::numeric) * 100 END AS pct_change_markets
-      FROM
-          Today, Yesterday;  
+            sa48.total_liquidity_48 AS yesterday_avg_liquidity, 
+            sa24.total_liquidity_24 AS today_avg_liquidity,
+            CASE 
+                WHEN sa48.total_liquidity_48 = 0 THEN NULL 
+                ELSE ((sa24.total_liquidity_24 - sa48.total_liquidity_48) / sa48.total_liquidity_48) * 100 
+            END AS pct_change_liquidity,
+
+            sa48.total_markets_48 AS yesterday_total_markets, 
+            sa24.total_markets_24 AS today_total_markets,
+            CASE 
+                WHEN sa48.total_markets_48 = 0 THEN NULL 
+                ELSE ((sa24.total_markets_24 - sa48.total_markets_48) / sa48.total_markets_48::numeric) * 100 
+            END AS pct_change_markets
+        FROM
+            SummedAverages24 sa24, SummedAverages48 sa48;
   `;
 
   try {
@@ -274,10 +280,18 @@ app.get('/api/overtimeData', async (req, res) => {
 // List of all current events
 app.get('/api/searchEvents', async (req, res) => {
     const query = `
+        WITH tab1 AS (
             SELECT 
-            distinct title
+                title, 
+                AVG(volume) AS Volume
             FROM public.events
-            where date_trunc('day', timestamp) = Date_trunc('day', NOW())    
+            WHERE timestamp >= NOW() - INTERVAL '24 hours'
+            GROUP BY 1 
+            ORDER BY 2 DESC 
+        ) 
+        SELECT 
+            title 
+        FROM tab1 
     `;
   
     try {
@@ -295,57 +309,51 @@ app.get('/api/eventOverall', async (req, res) => {
     const { title } = req.query; 
 
     const query = `
-        WITH DailyData AS (
+        WITH Last24Hours AS (
             SELECT 
-                date_trunc('day', timestamp) as Date,
                 avg(Volume) as avgVolume,
                 avg(volume24hr) as avgVolume24Hr, 
                 avg(liquidity) as avgLiquidity
             FROM public.events
             WHERE title = $1
-            GROUP BY 1
+            AND timestamp >= now() - interval '24 hours'
         ),
-        CurrentDay AS (
+        Last48Hours AS (
             SELECT 
-                avgVolume,
-                avgVolume24Hr,
-                avgLiquidity
-            FROM DailyData
-            WHERE Date = current_date
-        ),
-        PreviousDay AS (
-            SELECT 
-                avgVolume,
-                avgVolume24Hr,
-                avgLiquidity
-            FROM DailyData
-            WHERE Date = current_date - interval '1 day'
+                avg(Volume) as avgVolume,
+                avg(volume24hr) as avgVolume24Hr, 
+                avg(liquidity) as avgLiquidity
+            FROM public.events
+            WHERE title = $1
+            AND timestamp >= now() - interval '48 hours'
+            AND timestamp < now() - interval '24 hours'
         )
         SELECT
-            CurrentDay.avgVolume as currentVolume,
-            PreviousDay.avgVolume as previousVolume,
+            Last24Hours.avgVolume as currentVolume,
+            Last48Hours.avgVolume as previousVolume,
             CASE 
-                WHEN PreviousDay.avgVolume > 0 
-                THEN (CurrentDay.avgVolume - PreviousDay.avgVolume) / PreviousDay.avgVolume * 100
+                WHEN Last48Hours.avgVolume > 0 
+                THEN (Last24Hours.avgVolume - Last48Hours.avgVolume) / Last48Hours.avgVolume * 100
                 ELSE NULL
             END as volumePercentChange,
-            
-            CurrentDay.avgVolume24Hr as currentVolume24Hr,
-            PreviousDay.avgVolume24Hr as previousVolume24Hr,
+
+            Last24Hours.avgVolume24Hr as currentVolume24Hr,
+            Last48Hours.avgVolume24Hr as previousVolume24Hr,
             CASE 
-                WHEN PreviousDay.avgVolume24Hr > 0 
-                THEN (CurrentDay.avgVolume24Hr - PreviousDay.avgVolume24Hr) / PreviousDay.avgVolume24Hr * 100
+                WHEN Last48Hours.avgVolume24Hr > 0 
+                THEN (Last24Hours.avgVolume24Hr - Last48Hours.avgVolume24Hr) / Last48Hours.avgVolume24Hr * 100
                 ELSE NULL
             END as volume24HrPercentChange,
 
-            CurrentDay.avgLiquidity as currentLiquidity,
-            PreviousDay.avgLiquidity as previousLiquidity,
+            Last24Hours.avgLiquidity as currentLiquidity,
+            Last48Hours.avgLiquidity as previousLiquidity,
             CASE 
-                WHEN PreviousDay.avgLiquidity > 0 
-                THEN (CurrentDay.avgLiquidity - PreviousDay.avgLiquidity) / PreviousDay.avgLiquidity * 100
+                WHEN Last48Hours.avgLiquidity > 0 
+                THEN (Last24Hours.avgLiquidity - Last48Hours.avgLiquidity) / Last48Hours.avgLiquidity * 100
                 ELSE NULL
             END as liquidityPercentChange
-        FROM CurrentDay, PreviousDay;   
+        FROM Last24Hours, Last48Hours;
+
     `;
 
     try {
@@ -367,24 +375,25 @@ app.get('/api/eventBreakdown', async (req, res) => {
                 market ->> 'Question' as Question,
                 market ->> 'ID' as ID,
                 market ->> 'Slug' as Slug,
-                (market ->> 'Volume')::numeric as Volume,
-                (market ->> 'spread')::numeric as Spread,
+                NULLIF(market ->> 'Volume', '')::numeric as Volume,
+                NULLIF(market ->> 'spread', '')::numeric as Spread,
                 (market ->> 'EndDate')::timestamp as EndDate,
                 market ->> 'Featured' as Featured,
                 market ->> 'Outcomes' as Outcomes,
-                (market ->> 'Liquidity')::numeric as Liquidity,
+                NULLIF(market ->> 'Liquidity', '')::numeric as Liquidity,
                 (market ->> 'StartDate')::timestamp as StartDate,
                 (market ->> 'Timestamp')::timestamp as Timestamp,
-                (market ->> 'Volume24hr')::numeric as Volume24hr,
+                NULLIF(market ->> 'Volume24hr', '')::numeric as Volume24hr,
                 market ->> 'ConditionID' as ConditionID,
                 (market ->> 'CreatedDate')::timestamp as CreatedDate,
                 market ->> 'CLOBTokenIDs' as CLOBTokenIDs,
-                (replace((regexp_split_to_array(trim(both '[]' from market ->> 'OutcomePrices'), ',\s*'))[1], '"', ''))::numeric as YesPrice, 
-                (replace((regexp_split_to_array(trim(both '[]' from market ->> 'OutcomePrices'), ',\s*'))[2], '"', ''))::numeric as NoPrice,
+                (market ->> 'OutcomePrices') as OutcomePrices,
+                COALESCE(NULLIF(replace((regexp_split_to_array(trim(both '[]' from market ->> 'OutcomePrices'), ',\s*'))[1], '"', ''), ''), '0')::numeric as YesPrice, 
+                COALESCE(NULLIF(replace((regexp_split_to_array(trim(both '[]' from market ->> 'OutcomePrices'), ',\s*'))[2], '"', ''), ''), '0')::numeric as NoPrice,
                 (market ->> 'rewardsEndDate')::timestamp as RewardsEndDate,
-                (market ->> 'rewardsMinSize')::numeric as RewardsMinSize,
-                (market ->> 'rewardsDailyRate')::numeric as RewardsDailyRate,
-                (market ->> 'rewardsMaxSpread')::numeric as RewardsMaxSpread,
+                NULLIF(market ->> 'rewardsMinSize', '')::numeric as RewardsMinSize,
+                NULLIF(market ->> 'rewardsDailyRate', '')::numeric as RewardsDailyRate,
+                NULLIF(market ->> 'rewardsMaxSpread', '')::numeric as RewardsMaxSpread,
                 (market ->> 'rewardsStartDate')::timestamp as RewardsStartDate
             FROM 
                 events e,

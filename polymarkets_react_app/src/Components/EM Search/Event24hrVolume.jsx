@@ -105,7 +105,7 @@ function Event24hrVolume({ event }) {
       title={`Daily 24 Hour Volume for ${event}`}
       titleStyle={{
         fontFamily: 'Arial',
-        fontWeight: '500',
+        fontWeight: '600',
         size: '18px'
       }}
       primaryXAxis={{
@@ -117,7 +117,6 @@ function Event24hrVolume({ event }) {
         intervalType: 'Days'
       }}
       primaryYAxis={{
-        title: '24 Hour Volume',
         labelFormat: '${value}',
         majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
         lineStyle: { color: 'black', width: 2},

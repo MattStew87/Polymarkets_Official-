@@ -104,7 +104,7 @@ function EventLiquidity({ event }) {
       title={`Daily Liquidity for ${event}`}
       titleStyle={{
         fontFamily: 'Arial',
-        fontWeight: '500',
+        fontWeight: '600',
         size: '18px'
       }}
       primaryXAxis={{
@@ -116,7 +116,6 @@ function EventLiquidity({ event }) {
         intervalType: 'Days'
       }}
       primaryYAxis={{
-        title: 'Liquidity',
         labelFormat: '${value}',
         majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
         lineStyle: { color: 'black', width: 2},

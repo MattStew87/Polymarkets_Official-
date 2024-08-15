@@ -14,6 +14,12 @@ function SearchBar({ onSelectEvent }) {
       try {
         const response = await axios.get('http://3.141.7.141:5000/api/searchEvents');
         setEvents(response.data);
+
+        if (response.data.length > 0) {
+          onSelectEvent(response.data[0]);
+          setSearchTerm(response.data[0].title);
+        }
+
       } catch (error) {
         console.error('Error fetching data:', error);
         setError(error.message); 

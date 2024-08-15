@@ -470,6 +470,60 @@ const EventsMarkets = () => {
                 </ul>
                 
                 <hr className="navbar-divider my-5 opacity-70" />  
+
+                 {/* START OF RESROUCES*/}
+                 <ul className="navbar-nav">
+                    <li>
+                        <span className="nav-link text-xs fw-semibold text-uppercase text-muted ls-wide">
+                        Resources
+                        </span>
+                    </li>
+
+
+                    <li className="nav-item my-1">
+                        <a className="nav-link d-flex align-items-center rounded-pill" href="/docs">
+                            <img
+                                src="/pine_logo.png"
+                                alt="Pine Logo 2"
+                                style={{ width: '20px', height: '20px', marginRight: '8px' }} 
+                            />{" "}
+                            <span>Pine Website</span>{" "}
+                            <span className="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto" />
+                        </a>
+                    </li>
+
+                    <li className="nav-item my-1">
+                        <a className="nav-link d-flex align-items-center rounded-pill" href="https://x.com/PineAnalytics">
+                            <img 
+                                src="/twitter_logo.png" 
+                                alt="Twitter Logo" 
+                                style={{ width: '20px', height: '20px', marginRight: '8px' }} 
+                            /> 
+                            <span>Twitter</span>{" "}
+                            <span className="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto" />
+                        </a>
+                    </li>
+                    
+                    <li className="nav-item my-1">
+                        <a
+                        className="nav-link d-flex align-items-center rounded-pill"
+                        href="/widgets.html"
+                        >
+                            <img 
+                                src="/discord_logo.png" 
+                                alt="Discord Logo"
+                                style={{ width: '20px', height: '20px', marginRight: '8px' }} 
+                            /> 
+                            <span>Discord</span>{" "}
+                            <span className="badge badge-sm rounded-pill me-n2 bg-warning-subtle text-warning ms-auto">
+                                🔥 Hot
+                            </span>
+                        </a>
+                    </li>
+
+                </ul>
+                {/* END OF RESROUCES*/}
+                
             </div>
             </div>
             </nav>
@@ -751,25 +805,7 @@ const EventsMarkets = () => {
 
                     </div>
                     <div className="col">
-                        <div className="hstack gap-2 justify-content-end">
-                        <button
-                            type="button"
-                            className="btn btn-sm btn-neutral d-none d-sm-inline-flex"
-                            data-bs-target="#depositLiquidityModal"
-                            data-bs-toggle="modal"
-                        >
-                            <span className="pe-2">
-                            <i className="bi bi-plus-circle" />{" "}
-                            </span>
-                            <span>Liquidity</span>
-                        </button>{" "}
-                        <a
-                            href="/pages/page-overview.html"
-                            className="btn d-inline-flex btn-sm btn-dark"
-                        >
-                            <span>Trade</span>
-                        </a>
-                        </div>
+                        
                     </div>
                     </div>
                 </div>
