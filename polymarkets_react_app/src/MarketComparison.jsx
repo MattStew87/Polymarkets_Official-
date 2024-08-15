@@ -820,7 +820,26 @@ const MarketComparison = () => {
                     </div>
                 </div>
                 <div className="vstack gap-3 gap-xl-6">
-                    
+
+                        {/* MARKET BUTTON LABEL Start */}
+
+
+                        <button
+                            type="button"
+                            className="btn btn-sm btn-neutral d-none d-sm-inline-flex"
+                            onClick={() => {
+                                console.log("Button clicked!"); // You can replace this with any action you want to perform on click
+                            }}
+                        >
+                            <span className="pe-2">
+                                <i className="bi bi-plus-circle" />{" "}
+                            </span>
+                            <span>{selectedMarket}</span> {/* Dynamically set the button text */}
+                        </button>
+
+                        {/* MARKET BUTTON LABEL END */}
+                        
+                        
                         {/* OVERALL DATA */}
                         
                         {/* OVERALL DATA 
