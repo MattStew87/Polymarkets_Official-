@@ -437,6 +437,32 @@ app.get('/api/searchMarkets', async (req, res) => {
     }
 });
 
+app.get('/api/marketBreakdown', async (req, res) => {
+    const { question } = req.query;
+
+    const query = `
+        select 
+            date_trunc('day', timestamp) as Date,
+            question,  
+            avg(liquidity) as Liquidity, 
+            avg(volume) as Volume, 
+            avg(volume24hr) as Volume24hr
+        from public.markets 
+        where question = $1
+        group by 1,2
+        order by 1 
+    `;
+  
+    try {
+      const result = await pool.query(query, [question]);
+      res.json(result.rows);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+});
+
+
 /* ------------------------------------SECTION END----------------------------------------- */
 
 app.listen(port, () => {

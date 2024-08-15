@@ -3,7 +3,8 @@ import { NavLink } from 'react-router-dom';
 
 
 import SearchMarket from './Components/Market Comparison/SearchMarket';
-import TotalData from './Components/EM Search/TotalData';
+
+import VolumeMarket from './Components/Market Comparison/VolumeMarket'
 
 import EventVolume from './Components/EM Search/EventVolume';
 import EventLiquidity from './Components/EM Search/EventLiquidity';
@@ -11,11 +12,29 @@ import Event24hrVolume from './Components/EM Search/Event24hrVolume';
 
  
 const MarketComparison = () => {
-    const [selectedMarket, setSelectedMarket] = useState(null);
+    const [selectedMarkets, setSelectedMarkets] = useState([]);
+    const [recentlyAddedMarket, setRecentlyAddedMarket] = useState(null);
+    const [recentlyRemovedMarket, setRecentlyRemovedMarket] = useState(null);
+    const maxMarkets = 10;
 
+    
+    // Function to handle market selection
     const handleMarketSelection = (market) => {
-        setSelectedMarket(market.question);  // Log only the title if needed
-      };
+        if (selectedMarkets.length < maxMarkets) {
+            if (!selectedMarkets.some(selected => selected.question === market.question)) {
+                setSelectedMarkets([...selectedMarkets, market]); // add market 
+                setRecentlyAddedMarket(market.question);
+            }
+        } else {
+            alert(`You can only select up to ${maxMarkets} markets.`);
+        }
+    };
+
+    // Function to handle market removal
+    const handleMarketRemoval = (marketToRemove) => {
+        setSelectedMarkets(selectedMarkets.filter(market => market.question !== marketToRemove.question));
+        setRecentlyRemovedMarket(marketToRemove.question);
+    };
 
 
   return (
@@ -824,18 +843,22 @@ const MarketComparison = () => {
                         {/* MARKET BUTTON LABEL Start */}
 
 
-                        <button
-                            type="button"
-                            className="btn btn-sm btn-neutral d-none d-sm-inline-flex"
-                            onClick={() => {
-                                console.log("Button clicked!"); // You can replace this with any action you want to perform on click
-                            }}
-                        >
-                            <span className="pe-2">
-                                <i className="bi bi-plus-circle" />{" "}
-                            </span>
-                            <span>{selectedMarket}</span> {/* Dynamically set the button text */}
-                        </button>
+                        {/* Dynamically generated buttons for selected markets */}
+                        <div className="selected-markets mt-3">
+                            {selectedMarkets.map((market, index) => (
+                                <button
+                                    key={index}
+                                    type="button"
+                                    className="btn btn-sm btn-neutral m-1"
+                                    onClick={() => handleMarketRemoval(market)}
+                                >
+                                    <span className="pe-2">
+                                        <i className="bi bi-x-circle" />{" "}
+                                    </span>
+                                    <span>{market.question}</span>
+                                </button>
+                            ))}
+                        </div>
 
                         {/* MARKET BUTTON LABEL END */}
                         
@@ -849,9 +872,9 @@ const MarketComparison = () => {
                     <div className="col-xxl-12">
                         <div className="card">
                         <div className="card-body pb-0">
-                            {/* Empty card body 
+                
                             
-                            <EventVolume event={selectedEvent} />*/}
+                            <VolumeMarket marketToAdd={recentlyAddedMarket} marketToRemove={recentlyRemovedMarket} />
                             
                             
                         </div>
