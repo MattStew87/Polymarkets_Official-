@@ -22,28 +22,6 @@ const pool = new Pool({
 
 /* ------------------------------ROUTES NOT IN USE CURRENTLY ------------------------ */
 
-// New endpoint for liquidity used in TestChart.jsx 
-app.get('/api/liquidity', async (req, res) => {
-  const query = `
-    SELECT 
-    date_trunc('day', timestamp) as Date,
-    question, 
-    Avg(liquidity) as Liquidity
-    FROM public.markets
-    WHERE slug IN ('will-donald-trump-win-the-2024-us-presidential-election', 'will-kamala-harris-win-the-2024-us-presidential-election')
-    GROUP BY 1,2
-  `;
-
-  try {
-    const result = await pool.query(query);
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
-  }
-});
-
-
 // Gets trending markets used in are chart in Popular Markets Folder
 // Delete (Eventually) 
 app.get('/api/popularMarkets', async (req, res) => {
@@ -143,6 +121,9 @@ app.get('/api/popularMarkets', async (req, res) => {
   });
   
 /* ---------------------------------SECTION END----------------------------- */
+
+
+
 
 /* ---------------------------------HOME PAGE ROUTES----------------------------- */
 
@@ -426,6 +407,37 @@ app.get('/api/eventBreakdown', async (req, res) => {
 
 /* ---------------------------------SECTION END----------------------------- */
 
+
+
+/* ---------------------------------Market Comparison Page API----------------------------- */
+
+// List of all current events
+app.get('/api/searchMarkets', async (req, res) => {
+    const query = `
+        WITH tab1 AS (
+            SELECT 
+                question, 
+                AVG(volume) AS Volume
+            FROM public.markets
+            WHERE timestamp >= NOW() - INTERVAL '24 hours'
+            GROUP BY 1 
+            ORDER BY 2 DESC 
+        ) 
+        SELECT 
+            question 
+        FROM tab1 
+    `;
+  
+    try {
+      const result = await pool.query(query);
+      res.json(result.rows);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+});
+
+/* ------------------------------------SECTION END----------------------------------------- */
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

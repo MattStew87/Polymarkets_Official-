@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 
-import SearchBar from './Components/EM Search/SearchBar';
+import SearchMarket from './Components/Market Comparison/SearchMarket';
 import TotalData from './Components/EM Search/TotalData';
 
 import EventVolume from './Components/EM Search/EventVolume';
@@ -11,10 +11,10 @@ import Event24hrVolume from './Components/EM Search/Event24hrVolume';
 
  
 const MarketComparison = () => {
-    const [selectedEvent, setSelectedEvent] = useState(null);
+    const [selectedMarket, setSelectedMarket] = useState(null);
 
-    const handleEventSelection = (event) => {
-        setSelectedEvent(event.title);  // Log only the title if needed
+    const handleMarketSelection = (market) => {
+        setSelectedMarket(market.question);  // Log only the title if needed
       };
 
 
@@ -476,7 +476,7 @@ const MarketComparison = () => {
                         <span className="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto" />
                         </NavLink>
                     </li>
-                    
+
                 </ul>
                 
                 <hr className="navbar-divider my-5 opacity-70" />  
@@ -811,7 +811,7 @@ const MarketComparison = () => {
                     <div className="row g-3 align-items-center">
                     <div className="col">
     
-                        <SearchBar onSelectEvent={handleEventSelection}/>
+                        <SearchMarket onSelectMarket={handleMarketSelection}/>
 
                     </div>
                     <div className="col">
@@ -822,15 +822,18 @@ const MarketComparison = () => {
                 <div className="vstack gap-3 gap-xl-6">
                     
                         {/* OVERALL DATA */}
-                        <TotalData event={selectedEvent}/>
-                        {/* OVERALL DATA */}
+                        
+                        {/* OVERALL DATA 
+                        <TotalData event={selectedEvent}/>*/}
 
                     <div className="row g-3 g-xl-6">
                     <div className="col-xxl-12">
                         <div className="card">
                         <div className="card-body pb-0">
-                            {/* Empty card body */}
-                            <EventVolume event={selectedEvent} />
+                            {/* Empty card body 
+                            
+                            <EventVolume event={selectedEvent} />*/}
+                            
                             
                         </div>
                         </div>
@@ -840,16 +843,18 @@ const MarketComparison = () => {
                     <div className="col-xl-6">
                         <div className="card">
                         <div className="card-body pb-3">
-                            {/* Empty card body */} 
-                            <EventLiquidity event={selectedEvent} />
+                            {/* Empty card body 
+                            <EventLiquidity event={selectedEvent} />*/} 
+                            
                         </div>
                         </div>
                     </div>
                     <div className="col-xl-6">
                         <div className="card">
                         <div className="card-body pb-0">
-                            {/* Empty card body */}
-                            <Event24hrVolume event={selectedEvent} />
+                            {/* Empty card body 
+                            <Event24hrVolume event={selectedEvent} />*/}
+                            
                         </div>
                         </div>
                     </div>
