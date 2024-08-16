@@ -13,7 +13,7 @@ import {
   Crosshair
 } from '@syncfusion/ej2-react-charts';
 
-function VolumeMarket({ marketToAdd, marketToRemove }) {
+function Volume24Market({ marketToAdd, marketToRemove }) {
     const [data, setData] = useState({});
     const [error, setError] = useState(null);
     const [minDate, setMinDate] = useState(null);
@@ -31,7 +31,7 @@ function VolumeMarket({ marketToAdd, marketToRemove }) {
             });
             
             const validData = response.data.filter(item => item.date && !isNaN(new Date(item.date).getTime()));
-            const newData = validData.map(item => ({ x: new Date(item.date), y: parseFloat(item.volume) || 0 }));
+            const newData = validData.map(item => ({ x: new Date(item.date), y: parseFloat(item.volume24hr) || 0 }));
   
             setData(prevData => {
               const updatedData = { ...prevData, [marketToAdd]: newData };
@@ -124,9 +124,9 @@ function VolumeMarket({ marketToAdd, marketToRemove }) {
   
     return (
       <ChartComponent
-        id="market-volume-chart"
+        id="market-Volume24hr-chart"
         width = "95%"
-        title={`Daily Total Bet Volume by Market`}
+        title={`Daily Total Volume by Market`}
         titleStyle={{
           fontFamily: 'Arial',
           fontWeight: '600',
@@ -191,6 +191,6 @@ function VolumeMarket({ marketToAdd, marketToRemove }) {
     );
 }
   
-export default VolumeMarket;
+export default Volume24Market;
   
 

@@ -444,6 +444,7 @@ const EventsMarkets = () => {
                 id="sidebarCollapse"
                 >
                 <ul className="navbar-nav">
+
                     <li className="nav-item my-1">
                         <NavLink
                         className={({ isActive }) =>
@@ -461,9 +462,9 @@ const EventsMarkets = () => {
                         className={({ isActive }) =>
                             `nav-link d-flex align-items-center rounded-pill ${isActive ? 'active' : ''}`
                         }
-                        to="/events-markets"
+                        to="/market-comparison"
                         >
-                        <i class="bi bi-search me-2"></i> <span>Search Events</span>
+                        <i class="bi bi-bar-chart-fill"></i> <span>Market Comparison</span>
                         <span className="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto" />
                         </NavLink>
                     </li>
@@ -473,12 +474,13 @@ const EventsMarkets = () => {
                         className={({ isActive }) =>
                             `nav-link d-flex align-items-center rounded-pill ${isActive ? 'active' : ''}`
                         }
-                        to="/market-comparison"
+                        to="/events-markets"
                         >
-                        <i class="bi bi-search me-2"></i> <span>Market Comparison</span>
+                        <i class="bi bi-search me-2"></i> <span>Search Events</span>
                         <span className="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto" />
                         </NavLink>
                     </li>
+
                 </ul>
                 
                 <hr className="navbar-divider my-5 opacity-70" />  
@@ -493,7 +495,7 @@ const EventsMarkets = () => {
 
 
                     <li className="nav-item my-1">
-                        <a className="nav-link d-flex align-items-center rounded-pill" href="/docs">
+                        <a className="nav-link d-flex align-items-center rounded-pill" href="https://cantina-pines.xyz/">
                             <img
                                 src="/pine_logo.png"
                                 alt="Pine Logo 2"
@@ -505,21 +507,9 @@ const EventsMarkets = () => {
                     </li>
 
                     <li className="nav-item my-1">
-                        <a className="nav-link d-flex align-items-center rounded-pill" href="https://x.com/PineAnalytics">
-                            <img 
-                                src="/twitter_logo.png" 
-                                alt="Twitter Logo" 
-                                style={{ width: '20px', height: '20px', marginRight: '8px' }} 
-                            /> 
-                            <span>Twitter</span>{" "}
-                            <span className="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto" />
-                        </a>
-                    </li>
-                    
-                    <li className="nav-item my-1">
                         <a
                         className="nav-link d-flex align-items-center rounded-pill"
-                        href="/widgets.html"
+                        href="https://discord.gg/DdSu5yQMST"
                         >
                             <img 
                                 src="/discord_logo.png" 
@@ -527,6 +517,17 @@ const EventsMarkets = () => {
                                 style={{ width: '20px', height: '20px', marginRight: '8px' }} 
                             /> 
                             <span>Discord</span>{" "}
+                        </a>
+                    </li>
+
+                    <li className="nav-item my-1">
+                        <a className="nav-link d-flex align-items-center rounded-pill" href="https://x.com/PineAnalytics">
+                            <img 
+                                src="/twitter_logo.png" 
+                                alt="Twitter Logo" 
+                                style={{ width: '20px', height: '20px', marginRight: '8px' }} 
+                            /> 
+                            <span>Twitter</span>{" "}
                             <span className="badge badge-sm rounded-pill me-n2 bg-warning-subtle text-warning ms-auto">
                                 🔥 Hot
                             </span>
@@ -553,257 +554,21 @@ const EventsMarkets = () => {
                 </div>
                 </div>
                 <div className="hstack flex-fill justify-content-end flex-nowrap gap-6 ms-auto px-6 px-xxl-8">
-                <button
-                    type="button"
-                    className="btn btn-xs btn-primary rounded-pill text-nowrap"
-                    data-bs-target="#connectWalletModal"
-                    data-bs-toggle="modal"
-                >
-                    Connect
-                </button>
-                <div className="dropdown d-none">
-                    <a
-                    href="#"
-                    className="nav-link"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                    >
-                    <i className="bi bi-sun-fill" />
-                    </a>
-                    <div className="dropdown-menu">
-                    <button
-                        type="button"
-                        className="dropdown-item d-flex align-items-center"
-                        data-bs-theme-value="light"
-                    >
-                        Light
-                    </button>{" "}
-                    <button
-                        type="button"
-                        className="dropdown-item d-flex align-items-center"
-                        data-bs-theme-value="dark"
-                    >
-                        Dark
-                    </button>{" "}
-                    <button
-                        type="button"
-                        className="dropdown-item d-flex align-items-center"
-                        data-bs-theme-value="auto"
-                    >
-                        System
-                    </button>
-                    </div>
-                </div>
-                <div className="dropdown">
-                    <a
-                    href="#"
-                    className="nav-link"
-                    id="dropdown-notifications"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                    >
-                    <i className="bi bi-bell" />
-                    </a>
-                    <div
-                    className="dropdown-menu dropdown-menu-end px-2"
-                    aria-labelledby="dropdown-notifications"
-                    >
-                    <div className="dropdown-item d-flex align-items-center">
-                        <h6 className="dropdown-header px-0">Notifications</h6>
-                        <a href="#" className="text-sm fw-semibold ms-auto">
-                        Clear all
-                        </a>
-                    </div>
-                    <div className="dropdown-item py-3 d-flex">
-                        <div>
-                        <div className="avatar bg-primary text-white rounded-circle">
-                            RF
-                        </div>
-                        </div>
-                        <div className="flex-fill ms-3">
-                        <div className="text-sm lg-snug w-rem-64 text-wrap">
-                            <a
-                            href="#"
-                            className="fw-semibold text-heading text-primary-hover"
-                            >
-                            Robert
-                            </a>{" "}
-                            sent a message to{" "}
-                            <a
-                            href="#"
-                            className="fw-semibold text-heading text-primary-hover"
-                            >
-                            Webpixels
-                            </a>
-                        </div>
-                        <span className="text-muted text-xs">30 mins ago</span>
-                        </div>
-                    </div>
-                    <div className="dropdown-item py-3 d-flex">
-                        <div>
-                        <img
-                            src="../../img/people/img-1.jpg"
-                            className="avatar rounded-circle"
-                            alt="..."
-                        />
-                        </div>
-                        <div className="flex-fill ms-3">
-                        <div className="text-sm lg-snug w-rem-64 text-wrap">
-                            <a
-                            href="#"
-                            className="fw-semibold text-heading text-primary-hover"
-                            >
-                            Robert
-                            </a>{" "}
-                            sent a message to{" "}
-                            <a
-                            href="#"
-                            className="fw-semibold text-heading text-primary-hover"
-                            >
-                            Webpixels
-                            </a>
-                        </div>
-                        <span className="text-muted text-xs">30 mins ago</span>
-                        </div>
-                    </div>
-                    <div className="dropdown-item py-3 d-flex">
-                        <div>
-                        <img
-                            src="../../img/people/img-2.jpg"
-                            className="avatar rounded-circle"
-                            alt="..."
-                        />
-                        </div>
-                        <div className="flex-fill ms-3">
-                        <div className="text-sm lg-snug w-rem-64 text-wrap">
-                            <a
-                            href="#"
-                            className="fw-semibold text-heading text-primary-hover"
-                            >
-                            Robert
-                            </a>{" "}
-                            sent a message to{" "}
-                            <a
-                            href="#"
-                            className="fw-semibold text-heading text-primary-hover"
-                            >
-                            Webpixels
-                            </a>
-                        </div>
-                        <span className="text-muted text-xs">30 mins ago</span>
-                        </div>
-                    </div>
-                    <div className="dropdown-item py-3 d-flex">
-                        <div>
-                        <div className="avatar bg-success text-white rounded-circle">
-                            KW
-                        </div>
-                        </div>
-                        <div className="flex-fill ms-3">
-                        <div className="text-sm lg-snug w-rem-64 text-wrap">
-                            <a
-                            href="#"
-                            className="fw-semibold text-heading text-primary-hover"
-                            >
-                            Robert
-                            </a>{" "}
-                            sent a message to{" "}
-                            <a
-                            href="#"
-                            className="fw-semibold text-heading text-primary-hover"
-                            >
-                            Webpixels
-                            </a>
-                        </div>
-                        <span className="text-muted text-xs">30 mins ago</span>
-                        </div>
-                    </div>
-                    <div className="dropdown-item py-3 d-flex">
-                        <div>
-                        <img
-                            src="../../img/people/img-4.jpg"
-                            className="avatar rounded-circle"
-                            alt="..."
-                        />
-                        </div>
-                        <div className="flex-fill ms-3">
-                        <div className="text-sm lg-snug w-rem-64 text-wrap">
-                            <a
-                            href="#"
-                            className="fw-semibold text-heading text-primary-hover"
-                            >
-                            Robert
-                            </a>{" "}
-                            sent a message to{" "}
-                            <a
-                            href="#"
-                            className="fw-semibold text-heading text-primary-hover"
-                            >
-                            Webpixels
-                            </a>
-                        </div>
-                        <span className="text-muted text-xs">30 mins ago</span>
-                        </div>
-                    </div>
-                    <div className="dropdown-divider" />
-                    <div className="dropdown-item py-2 text-center">
+                
+                
+                
+                    <div className="dropdown">
                         <a
+                        className="avatar avatar-sm text-bg-dark rounded-circle"
                         href="#"
-                        className="fw-semibold text-muted text-primary-hover"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-haspopup="false"
+                        aria-expanded="false"
                         >
-                        View all
+                        <img src={`${process.env.PUBLIC_URL}/Mushroom_Pine.PNG`} alt="Mushroom Pine" />
                         </a>
-                    </div>
-                    </div>
-                </div>
-                <div className="dropdown">
-                    <a
-                    className="avatar avatar-sm text-bg-dark rounded-circle"
-                    href="#"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-haspopup="false"
-                    aria-expanded="false"
-                    >
-                    <img src={`${process.env.PUBLIC_URL}/Mushroom_Pine.PNG`} alt="Mushroom Pine" />
-                    </a>
-                    <div className="dropdown-menu dropdown-menu-end">
-                    <div className="dropdown-header">
-                        <span className="d-block text-sm text-muted mb-1">
-                        Signed in as
-                        </span>{" "}
-                        <span className="d-block text-heading fw-semibold">
-                        Alexis Enache
-                        </span>
-                    </div>
-                    <div className="dropdown-divider" />
-                    <a className="dropdown-item" href="#">
-                        <i className="bi bi-house me-3" />
-                        Home{" "}
-                    </a>
-                    <a className="dropdown-item" href="#">
-                        <i className="bi bi-pencil me-3" />
-                        Edit profile
-                    </a>
-                    <div className="dropdown-divider" />
-                    <a className="dropdown-item" href="#">
-                        <i className="bi bi-gear me-3" />
-                        Settings{" "}
-                    </a>
-                    <a className="dropdown-item" href="#">
-                        <i className="bi bi-image me-3" />
-                        Media{" "}
-                    </a>
-                    <a className="dropdown-item" href="#">
-                        <i className="bi bi-box-arrow-up me-3" />
-                        Share
-                    </a>
-                    <div className="dropdown-divider" />
-                    <a className="dropdown-item" href="#">
-                        <i className="bi bi-person me-3" />
-                        Login
-                    </a>
-                    </div>
+                    
                 </div>
                 </div>
             </div>

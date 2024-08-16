@@ -15,10 +15,12 @@ function SearchBar({ onSelectMarket }) {
         const response = await axios.get('http://3.141.7.141:5000/api/searchMarkets');
         setMarkets(response.data);
 
+         
         if (response.data.length > 0) {
           onSelectMarket(response.data[0]);
           setSearchTerm(response.data[0].question);
         }
+        
 
       } catch (error) {
         console.error('Error fetching data:', error);
