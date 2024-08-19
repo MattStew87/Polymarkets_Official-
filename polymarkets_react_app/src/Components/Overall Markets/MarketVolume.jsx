@@ -130,7 +130,7 @@ function MarketVolume({ id }) {
           yName='y'
           name='Volume'
           type='Column'
-          fill='#27aeef'
+          fill='#115f9a'
           columnWidth={0.8}
           columnSpacing={0.1}
         />

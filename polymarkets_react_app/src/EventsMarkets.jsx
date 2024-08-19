@@ -614,7 +614,7 @@ const EventsMarkets = () => {
                     </div>
                     <div className="col-xl-6">
                         <div className="card">
-                        <div className="card-body pb-0">
+                        <div className="card-body pb-3">
                             {/* Empty card body */}
                             <Event24hrVolume event={selectedEvent} />
                         </div>

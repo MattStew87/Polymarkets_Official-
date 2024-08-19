@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
 const dotenv = require('dotenv');
+const path = require('path');
+
 
 dotenv.config();
 
@@ -441,16 +443,17 @@ app.get('/api/marketBreakdown', async (req, res) => {
     const { question } = req.query;
 
     const query = `
-        select 
+        SELECT 
             date_trunc('day', timestamp) as Date,
             question,  
             avg(liquidity) as Liquidity, 
             avg(volume) as Volume, 
-            avg(volume24hr) as Volume24hr
-        from public.markets 
-        where question = $1
-        group by 1,2
-        order by 1 
+            avg(volume24hr) as Volume24hr,
+            
+        FROM public.markets
+        WHERE question = $1
+        GROUP BY 1,2
+        ORDER BY 1;
     `;
   
     try {
@@ -463,8 +466,44 @@ app.get('/api/marketBreakdown', async (req, res) => {
 });
 
 
+app.get('/api/test', async (req, res) => {
+    const { question } = req.query;
+
+    const query = `
+        SELECT 
+            outcome_prices
+        FROM public.markets
+        WHERE question = $1
+        ORDER BY 1;
+    `;
+  
+    try {
+      const result = await pool.query(query, [question]);
+      res.json(result.rows);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+});
+
 /* ------------------------------------SECTION END----------------------------------------- */
 
+
+
+
+
+/* ------------------------------------SECTION START----------------------------------------- */
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, '../polymarkets_react_app/build')));
+
+// Catch-all handler to serve React's index.html for any unknown routes
+app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname, '../polymarkets_react_app/build', 'index.html'));
+});
+/* ------------------------------------SECTION END----------------------------------------- */
+
+
+
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+    console.log(`Server running on port ${port}`);
 });

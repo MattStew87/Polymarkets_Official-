@@ -603,7 +603,7 @@ const HomePage = () => {
                     </div>
                     <div className="col-xl-6">
                         <div className="card">
-                        <div className="card-body pb-0">
+                        <div className="card-body pb-3">
                             {/* Empty card body */}
                             <MarketVolume24hr id="chart1-right" />
                         </div>

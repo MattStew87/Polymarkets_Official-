@@ -132,7 +132,7 @@ function MarketLiquidity({ id }) {
           yName='y'
           name='Liquidity'
           type='Column'
-          fill='#27aeef'
+          fill='#115f9a'
           columnWidth={0.8}
           columnSpacing={0.1}
         />
