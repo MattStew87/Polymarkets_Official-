@@ -443,17 +443,16 @@ app.get('/api/marketBreakdown', async (req, res) => {
     const { question } = req.query;
 
     const query = `
-        SELECT 
-            date_trunc('day', timestamp) as Date,
-            question,  
-            avg(liquidity) as Liquidity, 
-            avg(volume) as Volume, 
-            avg(volume24hr) as Volume24hr,
-            
-        FROM public.markets
-        WHERE question = $1
-        GROUP BY 1,2
-        ORDER BY 1;
+            SELECT 
+                date_trunc('day', timestamp) as Date,
+                question,  
+                avg(liquidity) as Liquidity, 
+                avg(volume) as Volume, 
+                avg(volume24hr) as Volume24hr
+            FROM public.markets
+            WHERE question = $1
+            GROUP BY 1,2
+            ORDER BY 1;
     `;
   
     try {
@@ -466,15 +465,55 @@ app.get('/api/marketBreakdown', async (req, res) => {
 });
 
 
-app.get('/api/test', async (req, res) => {
+
+
+
+app.get('/api/marketRewards', async (req, res) => {
     const { question } = req.query;
 
     const query = `
-        SELECT 
-            outcome_prices
-        FROM public.markets
-        WHERE question = $1
-        ORDER BY 1;
+            select
+            Question, 
+            rewards_start_date, 
+            rewards_end_date,
+            avg(rewards_min_size) as rewards_min_size, 
+            avg(rewards_max_spread) as rewards_max_spread,
+            avg(rewards_daily_rate) as reward_daily_rate,
+            avg(spread) as spread
+            from public.Markets
+            Where question = $1
+            AND timestamp >= now() - interval '24 hours'
+            Group by 1,2,3 
+            limit 100 
+    `;
+  
+    try {
+      const result = await pool.query(query, [question]);
+      res.json(result.rows);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+});
+
+
+app.get('/api/marketRewards', async (req, res) => {
+    const { question } = req.query;
+
+    const query = `
+            select
+            Question, 
+            rewards_start_date, 
+            rewards_end_date,
+            avg(rewards_min_size) as rewards_min_size, 
+            avg(rewards_max_spread) as rewards_max_spread,
+            avg(rewards_daily_rate) as reward_daily_rate,
+            avg(spread) as spread
+            from public.Markets
+            Where question = $1
+            AND timestamp >= now() - interval '24 hours'
+            Group by 1,2,3 
+            limit 100 
     `;
   
     try {

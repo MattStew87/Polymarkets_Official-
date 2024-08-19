@@ -8,7 +8,7 @@ import VolumeMarket from './Components/Market Comparison/VolumeMarket'
 import LiquidityMarket from './Components/Market Comparison/LiquidityMarket'
 import Volume24Market from './Components/Market Comparison/Volume24Market'
 
-
+import RewardsTable from './Components/Market Comparison/RewardsTable'
  
 const MarketComparison = () => {
     const [selectedMarkets, setSelectedMarkets] = useState([]);
@@ -670,6 +670,15 @@ const MarketComparison = () => {
                         </div>
                     </div>
                     </div>
+
+                    
+                    <div className="card">
+                        <div className="card-body pb-3">
+                            <RewardsTable marketToAdd={recentlyAddedMarket} marketToRemove={recentlyRemovedMarket}/>
+                        </div>
+                    </div>
+                    
+
                 </div>
                 </main>
             </div>
