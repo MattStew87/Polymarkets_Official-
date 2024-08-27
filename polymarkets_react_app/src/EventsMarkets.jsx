@@ -495,7 +495,7 @@ const EventsMarkets = () => {
 
 
                     <li className="nav-item my-1">
-                        <a className="nav-link d-flex align-items-center rounded-pill" href="https://cantina-pines.xyz/">
+                        <a className="nav-link d-flex align-items-center rounded-pill" href="https://www.pineanalytics.xyz/">
                             <img
                                 src="/pine_logo.png"
                                 alt="Pine Logo 2"
