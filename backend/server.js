@@ -465,9 +465,6 @@ app.get('/api/marketBreakdown', async (req, res) => {
 });
 
 
-
-
-
 app.get('/api/marketRewards', async (req, res) => {
     const { question } = req.query;
 
@@ -524,6 +521,69 @@ app.get('/api/marketRewards', async (req, res) => {
       res.status(500).send('Server Error');
     }
 });
+
+
+/* ------------------------------------DOESNT WORRRRRKKKKKKKKKKK----------------------------------------- */
+app.get('/api/marketPrices', async (req, res) => {
+    const { question } = req.query;
+
+    const query = `
+        WITH tab1 AS (
+            SELECT 
+                market ->> 'Question' as Question,
+                market ->> 'ID' as ID,
+                market ->> 'Slug' as Slug,
+                NULLIF(market ->> 'Volume', '')::numeric as Volume,
+                NULLIF(market ->> 'spread', '')::numeric as Spread,
+                (market ->> 'EndDate')::timestamp as EndDate,
+                market ->> 'Featured' as Featured,
+                market ->> 'Outcomes' as Outcomes,
+                NULLIF(market ->> 'Liquidity', '')::numeric as Liquidity,
+                (market ->> 'StartDate')::timestamp as StartDate,
+                (market ->> 'Timestamp')::timestamp as Timestamp,
+                NULLIF(market ->> 'Volume24hr', '')::numeric as Volume24hr,
+                market ->> 'ConditionID' as ConditionID,
+                (market ->> 'CreatedDate')::timestamp as CreatedDate,
+                market ->> 'CLOBTokenIDs' as CLOBTokenIDs,
+                (market ->> 'OutcomePrices') as OutcomePrices,
+                COALESCE(NULLIF(replace((regexp_split_to_array(trim(both '[]' from market ->> 'OutcomePrices'), ',\s*'))[1], '"', ''), ''), '0')::numeric as YesPrice, 
+                COALESCE(NULLIF(replace((regexp_split_to_array(trim(both '[]' from market ->> 'OutcomePrices'), ',\s*'))[2], '"', ''), ''), '0')::numeric as NoPrice,
+                (market ->> 'rewardsEndDate')::timestamp as RewardsEndDate,
+                NULLIF(market ->> 'rewardsMinSize', '')::numeric as RewardsMinSize,
+                NULLIF(market ->> 'rewardsDailyRate', '')::numeric as RewardsDailyRate,
+                NULLIF(market ->> 'rewardsMaxSpread', '')::numeric as RewardsMaxSpread,
+                (market ->> 'rewardsStartDate')::timestamp as RewardsStartDate
+            FROM 
+                events e,
+                jsonb_array_elements(e.Markets::jsonb) as market
+            
+        ) 
+        
+        
+        SELECT
+            date_trunc('day', Timestamp) as Date, 
+            Question,
+            avg(Volume) as Volume, 
+            avg(Spread) as Spread, 
+            avg(Volume24hr) as Volume24hr, 
+            avg(Liquidity) as Liquidity, 
+            avg(YesPrice) as YesPrice,
+            avg(NoPrice) as NoPrice
+        FROM tab1 
+        WHERE Question = $1
+        GROUP BY 1,2;   
+    `;
+  
+    try {
+      const result = await pool.query(query, [question]);
+      res.json(result.rows);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+});
+/* ------------------------------------DOESNT WORRRRRKKKKKKKKKKK----------------------------------------- */
+
 
 /* ------------------------------------SECTION END----------------------------------------- */
 
