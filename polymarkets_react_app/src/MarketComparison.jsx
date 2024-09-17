@@ -8,6 +8,11 @@ import VolumeMarket from './Components/Market Comparison/VolumeMarket'
 import LiquidityMarket from './Components/Market Comparison/LiquidityMarket'
 import Volume24Market from './Components/Market Comparison/Volume24Market'
 
+
+import MarketYesPrice from './Components/Market Comparison/MarketYesPrice'
+import MarketNoPrice from './Components/Market Comparison/MarketNoPrice'
+
+
 import RewardsTable from './Components/Market Comparison/RewardsTable'
  
 const MarketComparison = () => {
@@ -664,12 +669,37 @@ const MarketComparison = () => {
                         <div className="card">
                         <div className="card-body pb-3">
                         
-                            <Volume24Market marketToAdd={recentlyAddedMarket} marketToRemove={recentlyRemovedMarket}/>
+                            <Volume24Market marketToAdd={recentlyAddedMarket} marketToRemove={recentlyRemovedMarket}/>                            
                             
                         </div>
                         </div>
                     </div>
+
+
+                    <div className="col-xl-6">
+                        <div className="card">
+                        <div className="card-body pb-3">
+
+                            <MarketYesPrice marketToAdd={recentlyAddedMarket} marketToRemove={recentlyRemovedMarket}/>
+                            
+                        </div>
+                        </div>
                     </div>
+
+
+                    <div className="col-xl-6">
+                        <div className="card">
+                        <div className="card-body pb-3">   
+
+                            <MarketNoPrice marketToAdd={recentlyAddedMarket} marketToRemove={recentlyRemovedMarket}/>
+                            
+                        </div>
+                        </div>
+                    </div>
+
+                    </div>
+
+                    
 
                     
                     <div className="card">
