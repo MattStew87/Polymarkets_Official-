@@ -163,7 +163,7 @@ function LiquidityMarket({ marketToAdd, marketToRemove }) {
         sharedTooltipRender={tooltipRender}
         crosshair={{
           enable: true,
-          lineType: 'Vertical',
+          lineType: 'Both',
           line: {
             color: 'black'
           }

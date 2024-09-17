@@ -14,7 +14,6 @@ const RewardsTable = ({ marketToAdd, marketToRemove }) => {
           });
           
           if (response.data.length > 0) {
-            console.log('Fetched data for marketToAdd:', response.data[0]);
             setData(prevData => ({
               ...prevData,
               [marketToAdd]: response.data[0] // Assuming we are interested in the first object
@@ -65,7 +64,7 @@ const RewardsTable = ({ marketToAdd, marketToRemove }) => {
           </thead>
           <tbody>
             {Object.entries(data).map(([question, marketData]) => {
-              console.log('Rendering row for:', question, marketData);
+              
 
               return (
                 <tr key={question}>

@@ -18,7 +18,7 @@ function MarketYesPrice({ marketToAdd, marketToRemove }) {
   const [minDate, setMinDate] = useState(null);
   const [maxDate, setMaxDate] = useState(null);
 
-  const colors = ["#115f9a", "#22a7f0", "#76c68f", "#d0ee11", "#1984c5", "#48b5c4", "#a6d75b", "#c9e52f"];
+  const colors = ["#115f9a", "#1984c5", "#22a7f0", "#48b5c4", "#76c68f", "#a6d75b", "#c9e52f", "#d0ee11", "#d0f400"];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -93,7 +93,7 @@ function MarketYesPrice({ marketToAdd, marketToRemove }) {
   }));
 
   const formatValue = (value) => {
-    return value.toFixed(3);
+    return '$' + value.toFixed(3);
   };
 
   const axisLabelRender = (args) => {
@@ -130,7 +130,7 @@ function MarketYesPrice({ marketToAdd, marketToRemove }) {
       }}
       primaryYAxis={{
         minimum: 0,
-        maximum: 1,
+        maximum: 1.000,
         interval: 0.1,
         labelFormat: '{value}',
         majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
@@ -142,13 +142,14 @@ function MarketYesPrice({ marketToAdd, marketToRemove }) {
       tooltip={{
         enable: true,
         shared: true,
+        format: '${series.name}: ${point.y}'
       }}
       legendSettings={{ visible: true }}
       axisLabelRender={axisLabelRender}
       tooltipRender={tooltipRender}
       crosshair={{
         enable: true,
-        lineType: 'Vertical',
+        lineType: 'Both',
         line: {
           color: 'black'
         }
@@ -165,7 +166,7 @@ function MarketYesPrice({ marketToAdd, marketToRemove }) {
             name={series.name}
             type={series.type}
             width={2}
-            marker={{ visible: true, width: 7, height: 7 }}
+            marker={{ visible: true, width: 7, height: 7, shape: 'Circle', isFilled: true  }}
             fill={colors[index % colors.length]}
           />
         ))}
