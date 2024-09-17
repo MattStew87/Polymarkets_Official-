@@ -59,7 +59,6 @@ const RewardsTable = ({ marketToAdd, marketToRemove }) => {
               <th className="w-md-32 d-none d-lg-table-cell" scope="col">rewards max spread</th>
               <th className="w-md-32 d-none d-sm-table-cell" scope="col">reward daily rate</th>
               <th className="w-md-32 d-none d-xl-table-cell" scope="col">spread</th>
-              <th className="w-md-20 d-none d-sm-table-cell" />
             </tr>
           </thead>
           <tbody>
@@ -83,17 +82,6 @@ const RewardsTable = ({ marketToAdd, marketToRemove }) => {
                   <td className="d-none d-lg-table-cell">{parseFloat(marketData.rewards_max_spread).toFixed(2)}</td>
                   <td className="d-none d-sm-table-cell">{parseFloat(marketData.reward_daily_rate).toFixed(1)}</td>
                   <td className="d-none d-xl-table-cell">{parseFloat(marketData.spread).toFixed(7)}</td>
-                  <td className="text-end d-none d-sm-table-cell">
-                    <button
-                      onClick={() => {
-                        console.log('Remove button clicked for:', question);
-                        // No action is taken here
-                      }}
-                      className="btn btn-xs btn-neutral"
-                    >
-                      Remove
-                    </button>
-                  </td>
                 </tr>
               );
             })}
