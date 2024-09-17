@@ -523,7 +523,6 @@ app.get('/api/marketRewards', async (req, res) => {
 });
 
 
-/* ------------------------------------DOESNT WORRRRRKKKKKKKKKKK----------------------------------------- */
 app.get('/api/marketPrices', async (req, res) => {
     const { question } = req.query;
 
@@ -558,7 +557,6 @@ app.get('/api/marketPrices', async (req, res) => {
       res.status(500).send('Server Error');
     }
 });
-/* ------------------------------------DOESNT WORRRRRKKKKKKKKKKK----------------------------------------- */
 
 
 /* ------------------------------------SECTION END----------------------------------------- */
