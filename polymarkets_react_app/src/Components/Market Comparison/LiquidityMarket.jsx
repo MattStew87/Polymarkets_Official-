@@ -111,6 +111,7 @@ function LiquidityMarket({ marketToAdd, marketToRemove }) {
       }
     };
   
+    /* 
     const tooltipRender = (args) => {
       let tooltipData = args.series.map((series, index) => ({
         name: series.name,
@@ -121,6 +122,19 @@ function LiquidityMarket({ marketToAdd, marketToRemove }) {
       tooltipData.sort((a, b) => b.y - a.y);
       args.text = tooltipData.map(item => `${item.name}: ${item.formattedValue}`);
     };
+    */ 
+
+    const tooltipRender = (args) => {
+      let tooltipData = args.series.map((series, index) => ({
+        name: series.name,
+        y: args.point[index].y,
+        formattedValue: formatValue(args.point[index].y)
+      }));
+    
+      // Remove the sorting line
+      args.text = tooltipData.map(item => `${item.name}: ${item.formattedValue}`);
+    };
+
   
     return (
       <ChartComponent

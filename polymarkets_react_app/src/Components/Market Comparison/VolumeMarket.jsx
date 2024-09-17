@@ -118,7 +118,7 @@ function VolumeMarket({ marketToAdd, marketToRemove }) {
         formattedValue: formatValue(args.point[index].y)
       }));
     
-      tooltipData.sort((a, b) => b.y - a.y);
+      // Remove the sorting line
       args.text = tooltipData.map(item => `${item.name}: ${item.formattedValue}`);
     };
   

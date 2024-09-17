@@ -678,7 +678,7 @@ const MarketComparison = () => {
 
                     <div className="col-xl-6">
                         <div className="card">
-                        <div className="card-body pb-3">
+                        <div className="card-body pb-3">      
 
                             <MarketYesPrice marketToAdd={recentlyAddedMarket} marketToRemove={recentlyRemovedMarket}/>
                             
