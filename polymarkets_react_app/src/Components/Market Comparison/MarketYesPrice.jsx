@@ -105,7 +105,7 @@ function MarketYesPrice({ marketToAdd, marketToRemove }) {
   const tooltipRender = (args) => {
     args.text = [`${args.series.name}: ${formatValue(args.point.y)}`];
   };
-
+ 
   return (
     <ChartComponent
       id="market-yes-price-chart"
