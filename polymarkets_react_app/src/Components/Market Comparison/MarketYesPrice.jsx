@@ -100,7 +100,7 @@ function MarketYesPrice({ marketToAdd, marketToRemove }) {
     if (args.axis.name === 'primaryYAxis') {
       args.text = formatValue(parseFloat(args.text));
     }
-  };
+  }; 
  
   const tooltipRender = (args) => {
     args.text = [`${args.series.name}: ${formatValue(args.point.y)}`];
