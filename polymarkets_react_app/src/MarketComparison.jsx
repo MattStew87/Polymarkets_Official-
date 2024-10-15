@@ -639,8 +639,7 @@ const MarketComparison = () => {
                         
                         {/* OVERALL DATA */}
                         
-                        {/* OVERALL DATA 
-                        <TotalData event={selectedEvent}/>*/}
+                        {/* OVERALL DATA <TotalData event={selectedEvent}/>*/}
 
                     <div className="row g-3 g-xl-6">
                     <div className="col-xxl-12">
