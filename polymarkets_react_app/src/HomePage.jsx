@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import TotalDataComponent from './Components/Overall Markets/TotalDataComponent';
@@ -7,7 +7,10 @@ import MarketLiquidity from './Components/Overall Markets/MarketLiquidity';
 import MarketVolume from './Components/Overall Markets/MarketVolume';
 import MarketVolume24hr from './Components/Overall Markets/MarketVolume24hr';
 
+
+
 const HomePage = () => {
+    
   return (
     <>
         <meta charSet="UTF-8" />
@@ -351,7 +354,7 @@ const HomePage = () => {
                 </button>{" "}
                 <a
                 className="navbar-brand d-inline-block py-lg-1 mb-lg-5"
-                href="/pages/dashboard.html"
+                href="https://www.pineanalytics.xyz/"
                 >
                 <img
                     src="/pine_logo.png"
@@ -376,7 +379,9 @@ const HomePage = () => {
                     >
                     <div>
                         <div className="avatar avatar-sm text-bg-secondary rounded-circle">
-                            <img src={`${process.env.PUBLIC_URL}/Mushroom_Pine.PNG`} alt="Mushroom Pine" />
+                            <img src={`${process.env.PUBLIC_URL}/Mushroom_Pine.PNG`} alt="Mushroom Pine" /> 
+                            
+                            
                         </div>
                     </div>
                     <div className="d-none d-sm-block ms-3">
@@ -451,6 +456,7 @@ const HomePage = () => {
                         to="/market-comparison"
                         >
                         <i class="bi bi-bar-chart-fill"></i> <span>Market Comparison</span>
+
                         <span className="badge badge-sm rounded-pill me-n2 bg-success-subtle text-success ms-auto" />
                         </NavLink>
                     </li>
@@ -556,7 +562,8 @@ const HomePage = () => {
                     aria-haspopup="false"
                     aria-expanded="false"
                     >
-                    <img src={`${process.env.PUBLIC_URL}/Mushroom_Pine.PNG`} alt="Mushroom Pine" />
+                     <img src={`${process.env.PUBLIC_URL}/Mushroom_Pine.PNG`} alt="Mushroom Pine" />    
+
                     </a>
                     
                     
@@ -569,6 +576,7 @@ const HomePage = () => {
                     <div className="row g-3 align-items-center">
                     <div className="col">
                         <h1 className="ls-tight">Polymarkets Data</h1>
+                        
                     </div>
                     <div className="col">
             

@@ -365,7 +365,7 @@ const EventsMarkets = () => {
                 </button>{" "}
                 <a
                 className="navbar-brand d-inline-block py-lg-1 mb-lg-5"
-                href="/pages/dashboard.html"
+                href="https://www.pineanalytics.xyz/"
                 >
                 <img
                     src="/pine_logo.png"
