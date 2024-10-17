@@ -65,6 +65,8 @@ function MarketNoPrice({ marketToAdd, marketToRemove }) {
         const updatedData = { ...prevData };
         delete updatedData[marketToRemove];
 
+        console.log('Updated data after removal:', updatedData);
+
         const allDates = Object.values(updatedData).flat().map(item => item.x);
         const earliestDate = allDates.length ? new Date(Math.min(...allDates)) : null;
         const latestDate = allDates.length ? new Date(Math.max(...allDates)) : null;
@@ -79,10 +81,30 @@ function MarketNoPrice({ marketToAdd, marketToRemove }) {
           setMaxDate(null);
         }
 
+        console.log('Final updated data:', updatedData);
         return updatedData;
       });
     }
   }, [marketToRemove]);
+
+  if (Object.keys(data).length === 0) {
+    console.log('Data is empty, rendering watermark');
+    return (
+      <div style={{width: '95%', height: '450px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <img 
+          src="/pine_watermark.png" 
+          alt="Pine Watermark" 
+          style={{
+            maxWidth: '100%',
+            maxHeight: '100%',
+            objectFit: 'contain',
+            opacity: 0.5
+          }}
+        />
+      </div>
+    );
+  }
+
 
   const chartData = Object.entries(data).map(([question, data]) => ({
     dataSource: data,

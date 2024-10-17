@@ -85,6 +85,24 @@ function Volume24Market({ marketToAdd, marketToRemove }) {
         });
       }
     }, [marketToRemove]);
+
+    if (Object.keys(data).length === 0) {
+      console.log('Data is empty, rendering watermark');
+      return (
+        <div style={{width: '95%', height: '450px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <img 
+            src="/pine_watermark.png" 
+            alt="Pine Watermark" 
+            style={{
+              maxWidth: '100%',
+              maxHeight: '100%',
+              objectFit: 'contain',
+              opacity: 0.5
+            }}
+          />
+        </div>
+      );
+    }
   
     const chartData = Object.entries(data).map(([question, data]) => ({
       dataSource: data,
