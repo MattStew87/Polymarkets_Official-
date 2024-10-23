@@ -18,6 +18,7 @@ function App() {
         {/* Define the /events-markets route */}
         <Route path="/events-markets" element={<EventMarkets />} />
 
+        {/* Define the /market comparison route */}
         <Route path="/market-comparison" element={<MarketComparison />} />
 
       </Routes>

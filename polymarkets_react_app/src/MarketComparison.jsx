@@ -8,10 +8,8 @@ import VolumeMarket from './Components/Market Comparison/VolumeMarket'
 import LiquidityMarket from './Components/Market Comparison/LiquidityMarket'
 import Volume24Market from './Components/Market Comparison/Volume24Market'
 
-
 import MarketYesPrice from './Components/Market Comparison/MarketYesPrice'
 import MarketNoPrice from './Components/Market Comparison/MarketNoPrice'
-
 
 import RewardsTable from './Components/Market Comparison/RewardsTable'
  
