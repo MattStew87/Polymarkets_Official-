@@ -15,11 +15,13 @@ function SearchBar({ onSelectMarket }) {
         const response = await axios.get('http://3.141.7.141:5000/api/searchMarkets');
         setMarkets(response.data);
 
-         
+        
+        // This is likely what is causing the errors
         if (response.data.length > 0) {
           onSelectMarket(response.data[0]);
           setSearchTerm(response.data[0].question);
         }
+      
         
 
       } catch (error) {

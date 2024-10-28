@@ -85,7 +85,6 @@ function MarketYesPrice({ marketToAdd, marketToRemove }) {
   }, [marketToRemove]);
 
   if (Object.keys(data).length === 0) {
-    console.log('Data is empty, rendering watermark');
     return (
       <div style={{width: '95%', height: '450px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <img 

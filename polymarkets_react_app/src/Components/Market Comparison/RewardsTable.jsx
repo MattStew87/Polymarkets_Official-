@@ -33,7 +33,6 @@ const RewardsTable = ({ marketToAdd, marketToRemove }) => {
 
   useEffect(() => {
     if (marketToRemove) {
-      console.log('marketToRemove triggered:', marketToRemove);
       setData(prevData => {
         const updatedData = { ...prevData };
         delete updatedData[marketToRemove];

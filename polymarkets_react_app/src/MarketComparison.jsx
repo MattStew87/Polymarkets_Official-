@@ -26,6 +26,7 @@ const MarketComparison = () => {
             if (!selectedMarkets.some(selected => selected.question === market.question)) {
                 setSelectedMarkets([...selectedMarkets, market]); // add market 
                 setRecentlyAddedMarket(market.question);
+                setRecentlyRemovedMarket(null); // Reset removed market
             }
         } else {
             alert(`You can only select up to ${maxMarkets} markets.`);
@@ -36,6 +37,7 @@ const MarketComparison = () => {
     const handleMarketRemoval = (marketToRemove) => {
         setSelectedMarkets(selectedMarkets.filter(market => market.question !== marketToRemove.question));
         setRecentlyRemovedMarket(marketToRemove.question);
+        setRecentlyAddedMarket(null); // Reset added market
     };
 
 
