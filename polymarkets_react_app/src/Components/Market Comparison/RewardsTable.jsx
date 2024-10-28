@@ -1,17 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import axios from 'axios';
 
 const RewardsTable = ({ marketToAdd, marketToRemove }) => {
   const [data, setData] = useState({});
   const [error, setError] = useState(null);
+  const pendingRequests = useRef(new Set());
 
   useEffect(() => {
     const fetchData = async () => {
       if (marketToAdd) {
+
+        // Add this market to pending requests
+        pendingRequests.current.add(marketToAdd);
+
         try {
           const response = await axios.get('http://3.141.7.141:5000/api/marketRewards', {
             params: { question: marketToAdd }
           });
+
+          // Check if this market was removed while the request was pending
+          if (!pendingRequests.current.has(marketToAdd)) {
+            return; // Don't update state if the market was removed
+          }
           
           if (response.data.length > 0) {
             setData(prevData => ({
@@ -21,9 +31,14 @@ const RewardsTable = ({ marketToAdd, marketToRemove }) => {
           } else {
             console.log('No data found for marketToAdd:', marketToAdd);
           }
+          
+          // Remove from pending requests after successful addition
+          pendingRequests.current.delete(marketToAdd);
+
         } catch (err) {
           console.error('Error fetching data:', err);
           setError('Error fetching data');
+          pendingRequests.current.delete(marketToAdd);
         }
       }
     };
@@ -33,6 +48,12 @@ const RewardsTable = ({ marketToAdd, marketToRemove }) => {
 
   useEffect(() => {
     if (marketToRemove) {
+      
+      // Remove from pending requests if it's there
+      if (pendingRequests.current.has(marketToRemove)) {
+        pendingRequests.current.delete(marketToRemove);
+      }
+
       setData(prevData => {
         const updatedData = { ...prevData };
         delete updatedData[marketToRemove];
@@ -40,6 +61,14 @@ const RewardsTable = ({ marketToAdd, marketToRemove }) => {
       });
     }
   }, [marketToRemove]);
+
+  // Cleanup effect
+  useEffect(() => {
+    return () => {
+      // Clear all pending requests when component unmounts
+      pendingRequests.current.clear();
+    };
+  }, []);
 
   if (error) {
     return <div>{error}</div>;
