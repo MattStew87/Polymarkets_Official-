@@ -399,66 +399,16 @@ const MarketComparison = () => {
                 />
                 </a>
                 <div className="navbar-user d-lg-none">
-                <div className="dropdown">
-                    <a
-                    className="d-flex align-items-center"
-                    href="#"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-haspopup="false"
-                    aria-expanded="false"
-                    >
-                    <div>
-                        <div className="avatar avatar-sm text-bg-secondary rounded-circle">
-                            <img src={`${process.env.PUBLIC_URL}/Mushroom_Pine.PNG`} alt="Mushroom Pine" />
-                        </div>
+                <a href="https://x.com/MattStew_" target="_blank" rel="noopener noreferrer">
+                    <div className="avatar avatar-sm text-bg-secondary rounded-circle">
+                        <img
+                        src={`${process.env.PUBLIC_URL}/twitter_profile.png`}
+                        alt="profile twitter"
+                        />
                     </div>
-                    <div className="d-none d-sm-block ms-3">
-                        <span className="h6">Alexis</span>
-                    </div>
-                    <div className="d-none d-md-block ms-md-2">
-                        <i className="bi bi-chevron-down text-muted text-xs" />
-                    </div>
-                    </a>
-                    <div className="dropdown-menu dropdown-menu-end">
-                    <div className="dropdown-header">
-                        <span className="d-block text-sm text-muted mb-1">
-                        Signed in as
-                        </span>{" "}
-                        <span className="d-block text-heading fw-semibold">
-                        Alexis Enache
-                        </span>
-                    </div>
-                    <div className="dropdown-divider" />
-                    <a className="dropdown-item" href="#">
-                        <i className="bi bi-house me-3" />
-                        Home{" "}
-                    </a>
-                    <a className="dropdown-item" href="#">
-                        <i className="bi bi-pencil me-3" />
-                        Edit profile
-                    </a>
-                    <div className="dropdown-divider" />
-                    <a className="dropdown-item" href="#">
-                        <i className="bi bi-gear me-3" />
-                        Settings{" "}
-                    </a>
-                    <a className="dropdown-item" href="#">
-                        <i className="bi bi-image me-3" />
-                        Media{" "}
-                    </a>
-                    <a className="dropdown-item" href="#">
-                        <i className="bi bi-box-arrow-up me-3" />
-                        Share
-                    </a>
-                    <div className="dropdown-divider" />
-                    <a className="dropdown-item" href="#">
-                        <i className="bi bi-person me-3" />
-                        Login
-                    </a>
-                    </div>
-                </div>
-                </div>
+                </a>
+            </div>
+                
                 <div
                 className="collapse navbar-collapse overflow-x-hidden"
                 id="sidebarCollapse"
@@ -585,17 +535,19 @@ const MarketComparison = () => {
                 {/* got rid of bell button */}
                 <div className="dropdown">
                     <a
-                    className="avatar avatar-sm text-bg-dark rounded-circle"
-                    href="#"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-haspopup="false"
-                    aria-expanded="false"
+                        className="avatar avatar-sm text-bg-dark rounded-circle"
+                        href="https://x.com/MattStew_"
+                        target="_blank"
+                        rel="noopener noreferrer"
                     >
-                    <img src={`${process.env.PUBLIC_URL}/Mushroom_Pine.PNG`} alt="Mushroom Pine" />
+                        <div className="avatar avatar-sm text-bg-secondary rounded-circle">
+                        <img
+                            src={`${process.env.PUBLIC_URL}/twitter_profile.png`}
+                            alt="profile twitter"
+                        />
+                        </div>
                     </a>
-                    
-                </div>
+                    </div>
                 </div>
             </div>
             <div className="flex-fill overflow-y-lg-auto scrollbar bg-body rounded-top-4 rounded-top-start-lg-4 rounded-top-end-lg-0 border-top border-lg shadow-2">
