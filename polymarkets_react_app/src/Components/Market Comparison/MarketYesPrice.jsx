@@ -160,7 +160,7 @@ function MarketYesPrice({ marketToAdd, marketToRemove }) {
       args.text = formatValue(parseFloat(args.text));
     }
   }; 
- 
+  
   const tooltipRender = (args) => {
     args.text = [`${args.series.name}: ${formatValue(args.point.y)}`];
   };

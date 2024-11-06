@@ -95,7 +95,7 @@ function MarketLiquidity({ id }) {
   return (
     <ChartComponent
       id={id}
-      width = "100%"
+      width = "95%"
       title='Daily Total Liquidity (USD)'
       titleStyle={{
         fontFamily: 'Arial',

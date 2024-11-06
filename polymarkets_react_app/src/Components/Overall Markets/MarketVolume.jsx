@@ -95,7 +95,7 @@ function MarketVolume({ id }) {
   return (
     <ChartComponent
       id={id}
-      width = "100%"
+      width = "97%"
       title='Daily Total Volume (USD)'
       titleStyle={{
         fontFamily: 'Arial',

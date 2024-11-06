@@ -95,7 +95,7 @@ function MarketVolume24hr({ id }) {
   return (
     <ChartComponent
       id={id}
-      width = "100%"
+      width = "95%"
       title='Daily 24 Hour Volume (USD)'
       titleStyle={{
         fontFamily: 'Arial',
