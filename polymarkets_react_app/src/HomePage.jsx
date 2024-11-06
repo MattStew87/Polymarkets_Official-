@@ -542,7 +542,7 @@ const HomePage = () => {
                         <div className="card">
                         <div className="card-body pb-0">
                             {/* Empty card body */}
-                            <MarketLiquidity id="chartPop-top" />
+                            <MarketVolume id="chart-left" />
                         </div>
                         </div>
                     </div>
@@ -552,7 +552,7 @@ const HomePage = () => {
                         <div className="card">
                         <div className="card-body pb-3">
                             {/* Empty card body */} 
-                            <MarketVolume id="chart-left" />
+                            <MarketLiquidity id="chartPop-top" />
                         </div>
                         </div>
                     </div>

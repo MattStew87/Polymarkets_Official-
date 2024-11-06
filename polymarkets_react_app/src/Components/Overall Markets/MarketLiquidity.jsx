@@ -74,14 +74,28 @@ function MarketLiquidity({ id }) {
   const tooltipRender = (args) => {
     if (args.series && args.point) {
       const formattedValue = formatValue(args.point.y);
+      const date = new Date(args.point.x);
+      const formattedDate = date.toLocaleDateString('en-US', { 
+        month: 'short', 
+        day: 'numeric'
+      });
+      args.text = `${formattedDate}:\n${formattedValue}`;
+    }
+  };
+
+  /* 
+  const tooltipRender = (args) => {
+    if (args.series && args.point) {
+      const formattedValue = formatValue(args.point.y);
       args.text = `${formattedValue}`;
     }
   };
+  */ 
 
   return (
     <ChartComponent
       id={id}
-      width = "97%"
+      width = "100%"
       title='Daily Total Liquidity (USD)'
       titleStyle={{
         fontFamily: 'Arial',

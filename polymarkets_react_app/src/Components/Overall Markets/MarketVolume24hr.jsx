@@ -71,17 +71,31 @@ function MarketVolume24hr({ id }) {
     }
   };
 
+  /*
   const tooltipRender = (args) => {
     if (args.series && args.point) {
       const formattedValue = formatValue(args.point.y);
       args.text = `${formattedValue}`;
     }
   };
+  */ 
+
+  const tooltipRender = (args) => {
+    if (args.series && args.point) {
+      const formattedValue = formatValue(args.point.y);
+      const date = new Date(args.point.x);
+      const formattedDate = date.toLocaleDateString('en-US', { 
+        month: 'short', 
+        day: 'numeric'
+      });
+      args.text = `${formattedDate}:\n${formattedValue}`;
+    }
+  };
 
   return (
     <ChartComponent
       id={id}
-      width = "97%"
+      width = "100%"
       title='Daily 24 Hour Volume (USD)'
       titleStyle={{
         fontFamily: 'Arial',
@@ -96,6 +110,7 @@ function MarketVolume24hr({ id }) {
         majorGridLines: { width: 1, dashArray: '2,2', color: 'grey'},
         minorGridLines: { width: 0 },
         majorTickLines: { width: 2, height: 8, color: 'black'},
+        edgeLabelPlacement: 'Shift',
         lineStyle: { color: 'black', width: 2}
       }}
       primaryYAxis={{
